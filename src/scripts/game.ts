@@ -2,11 +2,12 @@ import 'phaser'
 import MainScene from './scenes/mainScene'
 import PreloadScene from './scenes/preloadScene'
 
-const DEFAULT_WIDTH = 1280
-const DEFAULT_HEIGHT = 720
+const DEFAULT_WIDTH = 320;
+const DEFAULT_HEIGHT = 192;
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
+  pixelArt: true,
   backgroundColor: '#ffffff',
   scale: {
     parent: 'phaser-game',
@@ -22,9 +23,14 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: false,
       gravity: { y: 400 }
     }
-  }
+  },
 }
 
 window.addEventListener('load', () => {
-  const game = new Phaser.Game(config)
+  const game = new Phaser.Game(config);
 })
+
+window.addEventListener('keydown', (e) => {
+  //Disable backspace from going back
+  if (e.key === 'Backspace') e.preventDefault();
+});
