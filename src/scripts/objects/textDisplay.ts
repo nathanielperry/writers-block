@@ -42,21 +42,21 @@ export default class TextDisplay {
         ]);
     
         this.group.setOrigin(0);
-        this.theRestDisplay.setDepth(403);
+        this.theRestDisplay.setDepth(401);
         this.currentDisplay.setDepth(402);
-        this.nextDisplay.setDepth(401);
+        this.nextDisplay.setDepth(403);
     }
 
     update(storyText) {
         const x = this.scene.cameras.main.scrollX + this.xOffset;
         const y = this.scene.cameras.main.scrollY + this.yOffset;
         this.group.setXY(x, y);
-        // this.group.setAlpha(storyText.getIsActive() ? 1 : 0);
-        this.group.setVisible(true);
-        this.group.setAlpha(1);
+        this.group.setAlpha(storyText.getIsActive() ? 1 : 0);
 
-        this.theRestDisplay.setText(storyText.getPureStoryText());
+        const letter = storyText.getCurrentLetter();
+
+        this.theRestDisplay.setText(storyText.getRemainingPureStoryText());
         this.currentDisplay.setText(storyText.getCurrentWord());
-        this.nextDisplay.setText(storyText.getCurrentLetter());
+        this.nextDisplay.setText(letter != ' ' ? letter : '_');
     }
 }

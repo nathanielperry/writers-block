@@ -4,7 +4,6 @@ import Typewriter from "../objects/typewriter";
 import Writer from "../objects/writer"
 import BlackHole from "../objects/blackhole"
 import CameraManager from "../util/CameraManager";
-import processEvent from "../util/processEvent";
 import TileManager from "../util/TileManager";
 import MapObjectsManager from "../util/MapObjectsManager";
 import BackgroundManager from "../util/BackgroundManager";
@@ -105,6 +104,9 @@ export default class MainScene extends Phaser.Scene {
     });
 
     scriptMan.registerGameActions({
+      log(sprite) {
+        console.log(sprite);
+      },
       show(sprite) {
         sprite.setAlpha(1);
       }, 
@@ -141,17 +143,7 @@ export default class MainScene extends Phaser.Scene {
         sprite.destroy();
       },
     });
-  
-    //Main listener for zone triggers
-    this.events.on('zone', (name) => {
-      processEvent(this, name);
-    });
-
-    //Main listener for word triggers
-    this.events.on('story', (word) => {
-      processEvent(this, word);
-    });
-
+    
     this.map.collide(this.writer);
     this.map.collide(this.typewriter);
 

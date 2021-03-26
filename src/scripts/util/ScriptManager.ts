@@ -52,9 +52,12 @@ export default class ScriptManager {
     parseEventArgs(args: Array<string>) {
         //For each argument, return an int, a matching game object, or the original argument.
         return args.map(arg => {
-            return !isNaN(parseInt(arg)) ||
-                this.gameObjects[arg] ||
-                arg;
+            if (!isNaN(parseInt(arg))) {
+                return parseInt(arg);
+            } else if (this.gameObjects[arg] !== undefined) {
+                return this.gameObjects[arg];
+            }
+            return arg;
         })
 
     }
@@ -91,10 +94,10 @@ export default class ScriptManager {
             if(/^--/.test(str)) {
                 let [_, action, args] = str.match(/--(.+)\((.+)\)/);
                 args = this.parseEventArgs(args.split(','));
-                await this.gameActions[action](...args).bind(this.gameObjects);
+                console.log(args);
+                await this.gameActions[action].bind(this.gameObjects)(...args);
             //If string starts and ends with `backticks`, send script-story event with contents
             } else {
-                
                 if(/^`.+`$/.test(str)) {
                     let storyString = str.slice(1, str.length - 1);
                     storyString = this.interpolateStoryBlock(storyString);

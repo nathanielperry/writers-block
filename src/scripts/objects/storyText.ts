@@ -30,8 +30,12 @@ export default class StoryText {
       return this.story.replaceAll(/\[.+?\]/g, '');
     }
 
+    getRemainingPureStoryText() {
+      return this.getPureStoryText().slice(this.currentPosition + 1);
+    }
+
     getCurrentWord() {
-      return this.pureStory.split(' ')[0];
+      return this.getRemainingPureStoryText().split(' ')[0];
     }
 
     getCurrentLetter() {
@@ -79,6 +83,7 @@ export default class StoryText {
       if (letter === this.getCurrentLetter()) {
         //Successful Letter typed
         this.currentPosition++;
+        this.offsetPosition++;
         //If the next character is '['
         //emit the event name.
         if (this.nextIsEvent()) {
