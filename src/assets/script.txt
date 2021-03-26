@@ -1,0 +1,127 @@
+#tutorial-1
+    --show(key-up-1)
+
+#tutorial-2
+    --moveCamera(500)
+    --show(key-down-1)
+
+#typewriter-get
+    --show(keyboard)
+    --hide(key-down-1)
+
+#title-done
+    --hide(keyboard)
+    --camFollow(writer)
+
+#tutorial-3
+    `To create is a joy. To hold in your hands something you made is an unrivaled experience.`
+
+#tutorial-4
+    --show(key-down-2, key-right-2)
+
+#void-1
+    --moveCamera(1120)
+    --checkpoint(void-checkpoint)
+    `But, before that, you still have to start with nothing. [nothing]An empty canvas. The void. [show-void]`
+
+#nothing
+    --fadeBackgroundTo(paper)
+
+#show-void
+    --show(blackhole)
+    --wait(2)
+    `The void is only scary until that pivotal moment when you get an idea. [idea1]`
+
+#idea-zone-1
+    `From your first idea, smaller ideas [idea2]can flow naturally.`
+#idea-zone-2
+    `You jump from idea [idea3]to idea. [idea4]`
+#idea-zone-3
+    `Eventually, the void goes away, [hide-void]and you are left now with open possibility.[possibility]`
+
+#hide-void
+    --hide(blackhole)
+#idea1
+    --show(idea-1)
+    --addPlayerCollider(idea-1)
+    --destroy(void-wall)
+#idea2
+    --show(idea-1)
+    --addPlayerCollider(idea-1)
+#idea3
+    --show(idea-1)
+    --addPlayerCollider(idea-1)
+#idea4
+    --show(idea-1)
+    --addPlayerCollider(idea-1)
+
+#possibility
+    --camFollow(writer)
+    --fadeBackgroundTo(mountains)
+
+#new-world-1
+    --moveCamera(1440)
+    `Your new world is basic at first, but you've got the luxury of time. The story takes shape [shape]gradually. [new-world-1-done]`
+#new-world-2
+    `Time and luxury, however, can be the death [death]of motivation, soon an endless, empty desert. [new-world-2-done]`
+#new-world-2-done
+    --camFollow(writer)
+
+#shape
+#death
+
+#dead-line-1
+    --moveCamera(1760)
+    --checkpoint(dead-line-checkpoint)
+    `Thus enters the deadline. [deadline-appears]When time and luxury become detrimental, then you must take them away. The deadline [deadline-start]becomes a raw force, pushing [deadline-jump]until you have no choice. [deadline-faster]`    
+#deadline-appears
+    --setX(deadline, 2025)
+    --setState(deadline, jumpTo, 2050)
+#deadline-start
+    --setAttribute(deadline, engaged, true)
+    --setState(deadline, approach, 0.15)
+#deadline-jump
+    --setState(deadline, jump, 16)
+#deadline-faster
+    --setState(deadline, approach, 0.2)
+    `Suddenly, you are able to build bridges. [bridge-1]`
+#bridge-1
+    --destroy(desert-wall)
+    --show(desert-bridge)
+
+#giant-leaps-1
+    `Immersed fully in your task, your passion burning brightly. [burn1]Giant leaps become possible. You may hit snags, but the deadline [deadline-jump-2]keeps pushing you, and new ideas [idea-5]will come.`
+
+#deadline-jump-2
+    --setState(deadline, jump, 32)
+#idea-5
+    --show(idea-5)
+    --addPlayerCollider(idea-5)
+
+#giant-leaps-2
+    `Still, don't neglect your self. Take breaks. Put down your tools and let your thoughts flow unburdened. Just don't forget to pick things up again.`
+#giant-leaps-3
+    `The deadline approaches faster, [deadline-fastest]but breaks will give you vital energy. Find the balance and soon the end will be in sight. [end-in-sight]`
+
+#deadline-fastest
+    --setState(deadline, approach, 0.3)
+
+#end-in-sight
+    --destroy(leaps-wall)
+
+#discipline-1
+    --setState(deadline, jumpToRelative, writer, -32)
+    `Having come this far, you must finish. Finishing, of course, is the hardest part. You will need something more. Something that comes with practice and patience.`
+            
+#discipline-2
+    `It cannot be manufactured, but will come as naturally as everything else.. if you finish. Get to the end, and complete your works. If you can't complete it, start something you know that you can. Get to the hard parts, and struggle. Only then will you learn discipline.`
+
+#discipline-3
+    `The key to staying motivated is a mantra: Action always precedes motivation. When the joy is gone, the spark has flickered out, or the task at hand feels too difficult, then you must simply act. Every press of a key brings you closer. Hope will grow inside you, and guide you to the end. [the-end]`
+
+#the-end
+    `Always remember that looking back, you will value the steep slopes for teaching you how to traverse them. The long and painful task, in hindsight, will be a milestone you will always cherish, maybe even more than the completed work itself. [the-end-end]`
+            
+#the-end-end
+    --show(thanks)
+    `Respawns: {writerDeaths}`

@@ -1,4 +1,3 @@
-import { DOWN, Scene, UP } from 'phaser';
 import { State, StateMachine } from '../util/StateMachine';
 const WALKSPEED: integer = 300;
 const JUMPHEIGHT: integer = 200;
@@ -91,70 +90,66 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
 }
 
 class FreezeState extends State {
-    enter() {
-        this.actor.setAccelerationX(0);
+    enter({ actor, stateMachine }) {
+        actor.setAccelerationX(0);
         setTimeout(() => {
-            this.stateMachine.setState('idle');
+            stateMachine.setState('idle');
         }, 200);
     }
 }
 
 class IdleState extends State {
-    enter() {
-        this.actor.anims.play(
-            this.actor.direction === 1 ? 'idle-right' : 'idle-left'
+    enter({ actor }) {
+        actor.anims.play(
+            actor.direction === 1 ? 'idle-right' : 'idle-left'
         );
-        this.actor.setAccelerationX(0);
+        actor.setAccelerationX(0);
     }
 
-    run() {
-        const { left, right, up } = this.actor.keys;
+    step({ actor, stateMachine }) {
+        const { left, right, up } = actor.keys;
 
-        if (up.isDown && this.actor.body.blocked.down) {
-            this.stateMachine.setState('jump');
+        if (up.isDown && actor.body.blocked.down) {
+            stateMachine.setState('jump');
         }
 
         if(left.isDown || right.isDown) {
-            this.stateMachine.setState('walk');
+            stateMachine.setState('walk');
         }
     }
 }
 
 class WalkState extends State {
-    enter() {
+    step({ actor, stateMachine }) {
+        const { left, right, up } = actor.keys;
         
-    }
-
-    run() {
-        const { left, right, up } = this.actor.keys;
-        
-        if (up.isDown && this.actor.body.blocked.down) {
-            this.stateMachine.setState('jump');
+        if (up.isDown && actor.body.blocked.down) {
+            stateMachine.setState('jump');
         }
 
         if(left.isDown) {
-            this.actor.setAccelerationX(-this.actor.getWalkSpeed());
-            this.actor.anims.play('walk-left', true);
-            this.actor.direction = -1;
+            actor.setAccelerationX(-actor.getWalkSpeed());
+            actor.anims.play('walk-left', true);
+            actor.direction = -1;
         } else if (right.isDown) {
-            this.actor.setAccelerationX(this.actor.getWalkSpeed());
-            this.actor.anims.play('walk-right', true);
-            this.actor.direction = 1;
+            actor.setAccelerationX(actor.getWalkSpeed());
+            actor.anims.play('walk-right', true);
+            actor.direction = 1;
         } else {
-            this.stateMachine.setState('idle');
+            stateMachine.setState('idle');
         }
     }
 }
 
 class JumpState extends WalkState{
-    enter() {
-        this.actor.setVelocityY(-this.actor.getJumpHeight());
+    enter({ actor }) {
+        actor.setVelocityY(-actor.getJumpHeight());
     }
 
-    run () {
-        super.run();
-        if(this.actor.body.blocked.down) {
-            this.stateMachine.setState('idle');
+    step({ actor, stateMachine }) {
+        super.step({ actor, stateMachine });
+        if(actor.body.blocked.down) {
+            stateMachine.setState('idle');
         }
     }
 }

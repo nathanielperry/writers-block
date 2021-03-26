@@ -9,13 +9,16 @@ import TileManager from "../util/TileManager";
 import MapObjectsManager from "../util/MapObjectsManager";
 import BackgroundManager from "../util/BackgroundManager";
 import DeadLine from "../objects/deadline";
+import TextDisplay from "../objects/textDisplay";
 import ZoneManager from "../util/ZoneManager";
+import ScriptManager from "../util/ScriptManager";
 
 export default class MainScene extends Phaser.Scene {
   writer: Writer;
   typewriter: Typewriter;
   ground: Phaser.GameObjects.Rectangle;
   storyText: StoryText;
+  textDisplay: TextDisplay;
   cam: CameraManager;
   map: TileManager;
   mom: MapObjectsManager;
@@ -33,6 +36,8 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
+    const scriptMan = new ScriptManager(this, this.cache.text.get('script'));
+
     //Set background
     // @ts-ignore
     this.bgman = new BackgroundManager(this);
@@ -63,7 +68,17 @@ export default class MainScene extends Phaser.Scene {
     
     this.writer = new Writer(this, this.spawns.playerSpawn.x, this.spawns.playerSpawn.y)
       .setDepth(-100);
-    this.storyText = new StoryText(this, `Writer's Block: An essay on motivation. [title-done]`);
+    this.storyText = new StoryText(this);
+    this.storyText.addStoryBlock(`Writer's Block: An essay on motivation. [title-done]`);
+    this.textDisplay = new TextDisplay(this, 20, 10);
+
+    this.events.on('hold-tw', () => {
+      this.storyText.setActive();
+    });
+    this.events.on('throw-tw', () => {
+      this.storyText.setInactive();
+    });
+    
     this.typewriter = new Typewriter(this, this.spawns.typewriterSpawn.x, this.spawns.typewriterSpawn.y, this.writer, this.storyText)
       .setDepth(-200);
     this.writer.typewriter = this.typewriter;
@@ -75,6 +90,57 @@ export default class MainScene extends Phaser.Scene {
 
     this.zm = new ZoneManager(this);
     this.zm.generateZones();
+    this.cam = new CameraManager(this, this.cameras.main);
+    this.cam.follow(this.writer);
+
+    scriptMan.registerGameObjects({
+      writer: this.writer,
+      typewriter: this.typewriter,
+      deadline: this.deadline,
+      bgManager: this.bgman,
+      blackhole: this.blackhole,
+      cam: this.cam,
+      addCollider: this.physics.add.collider,
+      playerDeaths: this.deaths,
+    });
+
+    scriptMan.registerGameActions({
+      show(sprite) {
+        sprite.setAlpha(1);
+      }, 
+      hide(sprite) {
+        sprite.setAlpha(0);
+      },
+      moveCamera(x) {
+        this.cam.moveTo(x);
+      },
+      camFollow(sprite) {
+        this.cam.follow(sprite);
+      },
+      checkpoint(name) {
+        this.createCheckpoint(name);
+      },
+      fadeBackgroundTo(name) {
+        this.bgManager.setBackground(name);
+      },
+      wait(seconds) {
+        return new Promise<void>(resolve => {
+          setTimeout(() => resolve(), seconds * 1000);
+        });
+      },
+      addPlayerCollider(sprite) {
+        this.addCollider(this.writer, sprite);
+      },
+      setX(sprite, x) {
+        sprite.x = x;
+      },
+      setState(sprite, state, ...args) {
+        sprite.setState(state, args);
+      },
+      destory(sprite) {
+        sprite.destroy();
+      },
+    });
   
     //Main listener for zone triggers
     this.events.on('zone', (name) => {
@@ -96,9 +162,6 @@ export default class MainScene extends Phaser.Scene {
         this.storyText.addLetter(event.key);
       }
     });
-
-    this.cam = new CameraManager(this, this.cameras.main);
-    this.cam.follow(this.writer);
   }
 
   update() {
@@ -108,6 +171,7 @@ export default class MainScene extends Phaser.Scene {
     this.blackhole.update();
     this.bgman.update();
     this.deadline.update();
+    this.textDisplay.update(this.storyText);
   }
 
   createCheckpoint(x, y) {

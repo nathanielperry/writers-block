@@ -7,7 +7,6 @@ const DRAG = 200;
 export default class Typewriter extends Phaser.Physics.Arcade.Sprite {
     stateMachine: StateMachine;
     writer: Writer;
-    story: StoryText;
     hasBeenGot: boolean;
 
     constructor(scene: Phaser.Scene, x: number, y: number, writer, story) {
@@ -15,7 +14,6 @@ export default class Typewriter extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.story = story;
         this.writer = writer;
         this.stateMachine = new StateMachine('idle', {
             idle: new IdleState,
@@ -55,49 +53,49 @@ export default class Typewriter extends Phaser.Physics.Arcade.Sprite {
 }
 
 class IdleState extends State {
-    enter() {
-        this.actor.body.allowGravity = true;
+    enter({ actor }) {
+        actor.body.allowGravity = true;
     }
 }
 
 class HeldState extends State {
-    enter() {
-        if (!this.actor.hasBeenGot) {
-            this.actor.hasBeenGot = true;
-            this.actor.scene.events.emit('zone', 'typewriter-get');
+    enter({ actor }) {
+        if (!actor.hasBeenGot) {
+            actor.hasBeenGot = true;
+            actor.scene.events.emit('zone', 'typewriter-get');
         }
 
-        this.actor.body.allowGravity = false;
-        this.actor.story.setVisible();
+        actor.body.allowGravity = false;
+        actor.scene.events.emit('hold-tw');
     }
     
-    run() {
-        const direction = this.actor.writer.direction;
-
+    step({ actor }) {
+        const direction = actor.writer.direction;
+        
         //Flip to face same direction as character
-        this.actor.flipX = direction == 1 ? false : true;
-
+        actor.flipX = direction == 1 ? false : true;
+        
         //Follow player character
-        this.actor.x = Phaser.Math.Interpolation.SmoothStep(0.5, this.actor.x, this.actor.writer.x + (8 * direction));
-        this.actor.y = Phaser.Math.Interpolation.SmoothStep(0.8, this.actor.y, this.actor.writer.y);
+        actor.x = Phaser.Math.Interpolation.SmoothStep(0.5, actor.x, actor.writer.x + (8 * direction));
+        actor.y = Phaser.Math.Interpolation.SmoothStep(0.8, actor.y, actor.writer.y);
     }
 }
 
 class ThrownState extends State {
-    enter() {
-        const direction = this.actor.writer.direction;
-        const velX = this.actor.writer.body.velocity.x;
-        const velY = this.actor.writer.body.velocity.y;
-
-        this.actor.body.allowGravity = true;
-        this.actor.story.setInvisible();
-        this.actor.setVelocityX((60 + Math.abs(velX)) * direction);
-        this.actor.setVelocityY(-115 - (Math.abs(velY)));
+    enter({ actor }) {
+        const direction = actor.writer.direction;
+        const velX = actor.writer.body.velocity.x;
+        const velY = actor.writer.body.velocity.y;
+        
+        actor.body.allowGravity = true;
+        actor.scene.events.emit('throw-tw');
+        actor.setVelocityX((60 + Math.abs(velX)) * direction);
+        actor.setVelocityY(-115 - (Math.abs(velY)));
     }
-
-    run() {
-        if(this.actor.body.blocked.down) {
-            this.stateMachine.setState('idle');
+    
+    step({ actor, stateMachine }) {
+        if(actor.body.blocked.down) {
+            stateMachine.setState('idle');
         }
     }
 }

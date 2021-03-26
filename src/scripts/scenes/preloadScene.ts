@@ -33,6 +33,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('blueprint', 'assets/img/blueprint.png');
     this.load.image('dark', 'assets/img/dark.png');
 
+    this.load.text('script', 'assets/script.txt');
+
     TileManager.preload(this);
     BackgroundManager.preload(this);
   }
