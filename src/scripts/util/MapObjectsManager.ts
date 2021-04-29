@@ -43,7 +43,11 @@ export default class MapObjectsManager {
 
     getMapObjects() {
         return this.sprites.reduce((acc, s) => {
-            acc[s.name] = s;
+            if (acc[s.name]) {
+                acc[s.name] = [s].concat(acc[s.name]);
+            } else {
+                acc[s.name] = s;
+            }
             return acc;
         }, {});
     }

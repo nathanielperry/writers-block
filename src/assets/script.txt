@@ -30,10 +30,10 @@
 #show-void
     --show(blackhole)
     --wait(2)
-    `The void is only scary until that pivotal moment when you get an idea. [idea1]`
+    `The void can be intimidating, until you get that first idea. [idea1]`
 
 #idea-zone-1
-    `From your first idea, smaller ideas [idea2]can flow naturally.`
+    `Follow-up ideas [idea2]then begin to flow naturally.`
 #idea-zone-2
     `You jump from idea [idea3]to idea. [idea4]`
 #idea-zone-3

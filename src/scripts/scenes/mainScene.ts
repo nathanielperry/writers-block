@@ -114,10 +114,14 @@ export default class MainScene extends Phaser.Scene {
         console.log(string);
       },
       show(sprite) {
-        sprite.setAlpha(1);
+        const sprites = [].concat(sprite);
+        //@ts-ignore
+        sprites.forEach(s => s.setAlpha(1));
       }, 
       hide(sprite) {
-        sprite.setAlpha(0);
+        const sprites = [].concat(sprite);
+        //@ts-ignore
+        sprites.forEach(s => s.setAlpha(0));
       },
       moveCamera(x) {
         this.cam.move(x);
