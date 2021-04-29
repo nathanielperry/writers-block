@@ -3,7 +3,7 @@ import MainScene from "../scenes/mainScene";
 export default class MapObjectsManager {
     scene: MainScene;
     sprites: Array<Phaser.GameObjects.Sprite>;
-    zones;
+    spawns;
     targetY: integer;
 
     constructor(scene) {
@@ -11,7 +11,7 @@ export default class MapObjectsManager {
         
         //Create all objects with type 'sprite'
         this.sprites = scene.map.createSpritesOfType('sprite', 'mapSprites');
-        
+        this.spawns = scene.map.getObjectsOfType('spawnpoint');
     }
 
     forEachByName(names: string | Array<string>, fn: Function) {
@@ -37,10 +37,18 @@ export default class MapObjectsManager {
         }, []);
     }
 
+    getSprite(name) {
+        return this.getMapObjects()[name];
+    }
+
     getMapObjects() {
         return this.sprites.reduce((acc, s) => {
             acc[s.name] = s;
             return acc;
         }, {});
+    }
+
+    getSpawn(name) {
+        return this.spawns[name];
     }
 }

@@ -16,6 +16,10 @@ export default class StoryText {
 
       this.isActive = false;
       this.setInactive();
+
+      this.scene.events.on('script-story', str => {
+        this.addStoryBlock(str);
+      });
     }
 
     setActive() {
@@ -64,7 +68,7 @@ export default class StoryText {
 
     addStoryBlock(str) {
       let newBlock = str;
-      if (this.currentPosition + 1 < this.story.length) {
+      if (this.currentPosition + 1 < this.pureStory.length) {
         newBlock = ' ' + newBlock;
       }
       this.story += newBlock;
@@ -72,10 +76,9 @@ export default class StoryText {
     }
 
     autoType() {
-      // setTimeout(() => {
-      //   this.addLetter(this.nextInput === '_' ? ' ' : this.nextInput.trim());
-      //   this.addLetter(' ');
-      // }, 100);
+      setTimeout(() => {
+        this.addLetter(this.getCurrentLetter());
+      }, 100);
     }
 
     addLetter(letter) {

@@ -21,8 +21,8 @@
 
 #void-1
     --moveCamera(1120)
-    --checkpoint(void-checkpoint)
     `But, before that, you still have to start with nothing. [nothing]An empty canvas. The void. [show-void]`
+    --checkpoint(void-checkpoint)
 
 #nothing
     --fadeBackgroundTo(paper)

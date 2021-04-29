@@ -15,6 +15,8 @@ import ScriptManager from "../util/ScriptManager";
 export default class MainScene extends Phaser.Scene {
   writer: Writer;
   typewriter: Typewriter;
+  spawnLocation;
+  typewriterSpawnLocation;
   ground: Phaser.GameObjects.Rectangle;
   storyText: StoryText;
   textDisplay: TextDisplay;
@@ -64,9 +66,10 @@ export default class MainScene extends Phaser.Scene {
     this.checkpointData = {};
 
     //Get spawnpoints
-    this.spawns = this.map.getObjectsOfType('spawnpoint');
-    
-    this.writer = new Writer(this, this.spawns.playerSpawn.x, this.spawns.playerSpawn.y)
+    this.setPlayerSpawn('playerSpawn');
+    this.setTypewriterSpawn('typewriterSpawn');
+
+    this.writer = new Writer(this, this.spawnLocation.x, this.spawnLocation.y)
       .setDepth(-100);
     this.storyText = new StoryText(this);
     this.storyText.addStoryBlock(`Writer's Block: An essay on motivation. [title-done]`);
@@ -79,7 +82,7 @@ export default class MainScene extends Phaser.Scene {
       this.storyText.setInactive();
     });
     
-    this.typewriter = new Typewriter(this, this.spawns.typewriterSpawn.x, this.spawns.typewriterSpawn.y, this.writer, this.storyText)
+    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y, this.writer, this.storyText)
       .setDepth(-200);
     this.writer.typewriter = this.typewriter;
     this.deadline = new DeadLine(this);
@@ -94,6 +97,7 @@ export default class MainScene extends Phaser.Scene {
     this.cam.follow(this.writer);
 
     scriptMan.registerGameObjects({
+      scene: this,
       writer: this.writer,
       typewriter: this.typewriter,
       deadline: this.deadline,
@@ -122,7 +126,7 @@ export default class MainScene extends Phaser.Scene {
         this.cam.follow(sprite);
       },
       checkpoint(name) {
-        this.createCheckpoint(name);
+        this.scene.createCheckpoint(name);
       },
       fadeBackgroundTo(name) {
         this.bgManager.setBackground(name);
@@ -168,37 +172,28 @@ export default class MainScene extends Phaser.Scene {
     this.textDisplay.update(this.storyText);
   }
 
-  createCheckpoint(x, y) {
-    //Move spawnpoints
-    const spawns = this.map.getObjectsOfType('spawnpoint');
-    spawns.playerSpawn.x = x;
-    spawns.playerSpawn.y = y;
-    spawns.typewriterSpawn.x = x;
-    spawns.typewriterSpawn.y = y;
+  setPlayerSpawn(name) {
+    const spawn = this.mom.getSpawn(name);
+    this.spawnLocation = {
+      x: spawn.x,
+      y: spawn.y,
+    }
   }
 
-  createTriggerZones(index) {
-    //Setup event trigger zones
-    const zones = this.map.getObjectsOfType('zone');
-    Object.values(zones).forEach((zone, i) => {
-      // @ts-ignore
-      if (i > this.checkpointData.triggerIndex) return;
-      // @ts-ignore
-      const newZone = this.add.zone(zone.x, zone.y, zone.width, zone.height);
-      this.physics.add.existing(newZone);
-      // @ts-ignore
-      newZone.body.allowGravity = false;
-      newZone.setOrigin(0, 0);
-      let triggered = false;
-      //@ts-ignore
-      this.physics.add.overlap(this.writer, newZone, () => {
-        if (!triggered) {
-          // @ts-ignore
-          this.events.emit('zone', zone.name);
-          triggered = true;
-        }
-      });
-    });
+  setTypewriterSpawn(name) {
+    const spawn = this.mom.getSpawn(name);
+    this.typewriterSpawnLocation = {
+      x: spawn.x,
+      y: spawn.y,
+    }
+  }
+
+  createCheckpoint(name) {
+    //Move spawnpoints
+    this.setPlayerSpawn(name);
+    this.setTypewriterSpawn(name);
+    //Track position in story.
+    //Reset zones after point in story.
   }
 
   engageDeadline() {

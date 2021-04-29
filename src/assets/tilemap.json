@@ -1680,6 +1680,18 @@
                  "width":16,
                  "x":1056,
                  "y":112
+                }, 
+                {
+                 "height":0,
+                 "id":171,
+                 "name":"void-checkpoint",
+                 "point":true,
+                 "rotation":0,
+                 "type":"spawnpoint",
+                 "visible":true,
+                 "width":0,
+                 "x":1160,
+                 "y":112
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1688,7 +1700,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":171,
+ "nextobjectid":172,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
