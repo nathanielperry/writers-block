@@ -1654,15 +1654,32 @@
                  "y":80
                 }, 
                 {
-                 "height":32,
+                 "height":160,
                  "id":167,
                  "name":"discipline-3",
                  "rotation":0,
                  "type":"zone",
                  "visible":true,
                  "width":32,
-                 "x":4432,
+                 "x":5072,
                  "y":0
+                }, 
+                {
+                 "height":16,
+                 "id":170,
+                 "name":"key-down-2",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":1056,
+                 "y":112
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1671,7 +1688,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":170,
+ "nextobjectid":171,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

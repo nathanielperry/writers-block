@@ -94,7 +94,6 @@ export default class ScriptManager {
             if(/^--/.test(str)) {
                 let [_, action, args] = str.match(/--(.+)\((.+)\)/);
                 args = this.parseEventArgs(args.split(','));
-                console.log(args);
                 await this.gameActions[action].bind(this.gameObjects)(...args);
             //If string starts and ends with `backticks`, send script-story event with contents
             } else {

@@ -33,7 +33,7 @@ export default class ZoneManager {
             this.scene.physics.add.overlap(this.scene.writer, newZone, () => {
                 if (!this.zones[i].triggered) {
                     // @ts-ignore
-                    this.scene.events.emit('zone', zone.name);
+                    this.scene.events.emit('script-event', zone.name);
                     this.zones[i].triggered = true;
                 }
             });

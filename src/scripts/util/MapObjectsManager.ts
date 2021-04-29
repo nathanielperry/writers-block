@@ -3,6 +3,7 @@ import MainScene from "../scenes/mainScene";
 export default class MapObjectsManager {
     scene: MainScene;
     sprites: Array<Phaser.GameObjects.Sprite>;
+    zones;
     targetY: integer;
 
     constructor(scene) {
@@ -10,6 +11,7 @@ export default class MapObjectsManager {
         
         //Create all objects with type 'sprite'
         this.sprites = scene.map.createSpritesOfType('sprite', 'mapSprites');
+        
     }
 
     forEachByName(names: string | Array<string>, fn: Function) {
@@ -33,5 +35,12 @@ export default class MapObjectsManager {
             }
             return match;
         }, []);
+    }
+
+    getMapObjects() {
+        return this.sprites.reduce((acc, s) => {
+            acc[s.name] = s;
+            return acc;
+        }, {});
     }
 }

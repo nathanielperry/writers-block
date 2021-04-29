@@ -1,23 +1,23 @@
 #tutorial-1
-    --show(key-up-1)
+    --show(key-up)
 
 #tutorial-2
     --moveCamera(500)
-    --show(key-down-1)
+    --show(key-down)
 
 #typewriter-get
     --show(keyboard)
-    --hide(key-down-1)
+    --hide(key-down)
 
 #title-done
     --hide(keyboard)
     --camFollow(writer)
 
 #tutorial-3
-    `To create is a joy. To hold in your hands something you made is an unrivaled experience.`
+    `To create is a joy. To hold something you made is an unrivaled experience.`
 
 #tutorial-4
-    --show(key-down-2, key-right-2)
+    --show(key-down-2)
 
 #void-1
     --moveCamera(1120)

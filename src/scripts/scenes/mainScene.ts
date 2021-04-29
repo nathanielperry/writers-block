@@ -49,6 +49,7 @@ export default class MainScene extends Phaser.Scene {
     this.mom.forEachByName([
         'key-up', 
         'key-down',
+        'key-down-2',
         'keyboard',
         'idea-1',
         'idea-2',
@@ -101,11 +102,12 @@ export default class MainScene extends Phaser.Scene {
       cam: this.cam,
       addCollider: this.physics.add.collider,
       playerDeaths: this.deaths,
+      ...this.mom.getMapObjects(),
     });
 
     scriptMan.registerGameActions({
-      log(sprite) {
-        console.log(sprite);
+      log(string) {
+        console.log(string);
       },
       show(sprite) {
         sprite.setAlpha(1);
@@ -114,7 +116,7 @@ export default class MainScene extends Phaser.Scene {
         sprite.setAlpha(0);
       },
       moveCamera(x) {
-        this.cam.moveTo(x);
+        this.cam.move(x);
       },
       camFollow(sprite) {
         this.cam.follow(sprite);
