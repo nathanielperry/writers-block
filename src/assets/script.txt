@@ -14,31 +14,28 @@
     --camFollow(writer)
 
 #tutorial-3
-    `To create is a joy. To hold something you made is an unrivaled experience.`
+    `To create is a joy.`
 
 #tutorial-4
     --show(key-down-2)
 
 #void-1
     --moveCamera(1120)
-    `But, before that, you still have to start with nothing. [nothing]An empty canvas. The void. [show-void]`
+    `But creation first starts with nothing. [nothing]An empty canvas. The void. [show-void]`
     --checkpoint(void-checkpoint)
-
 #nothing
     --fadeBackgroundTo(paper)
-
 #show-void
     --show(blackhole)
     --wait(2)
-    `The void can be intimidating, until you get that first idea. [idea1]`
+    `The void can be a source of fear, but all you need is that initial idea. [idea1]`
 
 #idea-zone-1
-    `Follow-up ideas [idea2]then begin to flow naturally.`
+    `More ideas [idea2]begin to flow naturally.`
 #idea-zone-2
     `You jump from idea [idea3]to idea. [idea4]`
 #idea-zone-3
     `Eventually, the void goes away, [hide-void]and you are left now with open possibility.[possibility]`
-
 #hide-void
     --hide(blackhole)
 #idea1
@@ -46,22 +43,23 @@
     --addPlayerCollider(idea-1)
     --destroy(void-wall)
 #idea2
-    --show(idea-1)
-    --addPlayerCollider(idea-1)
+    --show(idea-2)
+    --addPlayerCollider(idea-2)
 #idea3
-    --show(idea-1)
-    --addPlayerCollider(idea-1)
+    --show(idea-3)
+    --addPlayerCollider(idea-3)
 #idea4
-    --show(idea-1)
-    --addPlayerCollider(idea-1)
-
+    --show(idea-4)
+    --addPlayerCollider(idea-4)
 #possibility
     --camFollow(writer)
     --fadeBackgroundTo(mountains)
 
 #new-world-1
     --moveCamera(1440)
-    `Your new world is basic at first, but you've got the luxury of time. The story takes shape [shape]gradually. [new-world-1-done]`
+    `Your new world is basic at first, but you've got time. The story takes shape [shape]gradually. [new-world-1-done]`
+#new-world-1-done
+    --camFollow(writer)
 #new-world-2
     `Time and luxury, however, can be the death [death]of motivation, soon an endless, empty desert. [new-world-2-done]`
 #new-world-2-done
@@ -73,7 +71,7 @@
 #dead-line-1
     --moveCamera(1760)
     --checkpoint(dead-line-checkpoint)
-    `Thus enters the deadline. [deadline-appears]When time and luxury become detrimental, then you must take them away. The deadline [deadline-start]becomes a raw force, pushing [deadline-jump]until you have no choice. [deadline-faster]`    
+    `Thus enters the deadline. [deadline-appears]When time and luxury become detrimental, then you must take them away. The deadline [deadline-start]becomes a raw force, pushing [deadline-jump]until you have no choice. [deadline-faster]`
 #deadline-appears
     --setX(deadline, 2025)
     --setState(deadline, jumpTo, 2050)

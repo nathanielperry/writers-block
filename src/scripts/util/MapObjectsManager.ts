@@ -3,14 +3,29 @@ import MainScene from "../scenes/mainScene";
 export default class MapObjectsManager {
     scene: MainScene;
     sprites: Array<Phaser.GameObjects.Sprite>;
+    spriteGroups: Object;
     spawns;
-    targetY: integer;
 
     constructor(scene) {
         this.scene = scene;
         
         //Create all objects with type 'sprite'
         this.sprites = scene.map.createSpritesOfType('sprite', 'mapSprites');
+        //Add to physics engine
+        this.sprites.forEach(sprite => {
+            this.scene.physics.add.existing(sprite);
+            //@ts-ignore
+            sprite.body.setAllowGravity(false);
+            //@ts-ignore
+            sprite.body.setImmovable(true);
+        });
+        this.spriteGroups = this.sprites.reduce((acc, sprite) => {
+            if (!acc[sprite.name]) {
+                acc[sprite.name] = this.scene.add.group();
+            }
+            acc[sprite.name].add(sprite);
+            return acc;
+        }, {});
         this.spawns = scene.map.getObjectsOfType('spawnpoint');
     }
 
@@ -42,14 +57,11 @@ export default class MapObjectsManager {
     }
 
     getMapObjects() {
-        return this.sprites.reduce((acc, s) => {
-            if (acc[s.name]) {
-                acc[s.name] = [s].concat(acc[s.name]);
-            } else {
-                acc[s.name] = s;
-            }
-            return acc;
-        }, {});
+        return this.spriteGroups;
+    }
+
+    getMapObject(name) {
+        return this.getMapObjects()[name] || name;
     }
 
     getSpawn(name) {

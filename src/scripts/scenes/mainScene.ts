@@ -97,15 +97,13 @@ export default class MainScene extends Phaser.Scene {
     this.cam.follow(this.writer);
 
     scriptMan.registerGameObjects({
-      scene: this,
+      bgman: this.bgman,
+      cam: this.cam,
       writer: this.writer,
       typewriter: this.typewriter,
       deadline: this.deadline,
-      bgManager: this.bgman,
       blackhole: this.blackhole,
-      cam: this.cam,
-      addCollider: this.physics.add.collider,
-      playerDeaths: this.deaths,
+      physics: this.physics,
       ...this.mom.getMapObjects(),
     });
 
@@ -113,44 +111,40 @@ export default class MainScene extends Phaser.Scene {
       log(string) {
         console.log(string);
       },
-      show(sprite) {
-        const sprites = [].concat(sprite);
-        //@ts-ignore
-        sprites.forEach(s => s.setAlpha(1));
+      show(name) {
+        this[name].setAlpha(1);
       }, 
-      hide(sprite) {
-        const sprites = [].concat(sprite);
-        //@ts-ignore
-        sprites.forEach(s => s.setAlpha(0));
+      hide(name) {
+        this[name].setAlpha(0);
       },
       moveCamera(x) {
         this.cam.move(x);
       },
-      camFollow(sprite) {
-        this.cam.follow(sprite);
+      camFollow(name) {
+        this.cam.follow(this[name]);
       },
       checkpoint(name) {
-        this.scene.createCheckpoint(name);
+        this.createCheckpoint(name);
       },
       fadeBackgroundTo(name) {
-        this.bgManager.setBackground(name);
+        this.bgman.setBackground(name);
       },
       wait(seconds) {
         return new Promise<void>(resolve => {
           setTimeout(() => resolve(), seconds * 1000);
         });
       },
-      addPlayerCollider(sprite) {
-        this.addCollider(this.writer, sprite);
+      addPlayerCollider(name) {
+        this.physics.add.collider(this.writer, this[name]);
       },
-      setX(sprite, x) {
-        sprite.x = x;
+      setX(name, x) {
+        this[name].x = x;
       },
-      setState(sprite, state, ...args) {
-        sprite.setState(state, args);
+      setState(name, state, ...args) {
+        this[name].getChildren.forEach(sprite => sprite.setState(state, args));
       },
-      destory(sprite) {
-        sprite.destroy();
+      destroy(name) {
+        this[name].destroy();
       },
     });
     

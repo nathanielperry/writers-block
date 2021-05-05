@@ -1692,6 +1692,23 @@
                  "width":0,
                  "x":1160,
                  "y":112
+                }, 
+                {
+                 "height":128,
+                 "id":174,
+                 "name":"test-zone",
+                 "properties":[
+                        {
+                         "name":"triggerOrder",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"zone",
+                 "visible":true,
+                 "width":48,
+                 "x":112,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1700,7 +1717,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":172,
+ "nextobjectid":176,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

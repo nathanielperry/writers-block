@@ -54,11 +54,9 @@ export default class ScriptManager {
         return args.map(arg => {
             if (!isNaN(parseInt(arg))) {
                 return parseInt(arg);
-            } else if (this.gameObjects[arg] !== undefined) {
-                return this.gameObjects[arg];
-            }
+            }    
             return arg;
-        })
+        });
 
     }
 
