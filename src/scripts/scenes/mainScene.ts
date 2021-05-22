@@ -13,6 +13,7 @@ import ZoneManager from "../util/ZoneManager";
 import ScriptManager from "../util/ScriptManager";
 
 export default class MainScene extends Phaser.Scene {
+  debug: Boolean;
   writer: Writer;
   typewriter: Typewriter;
   spawnLocation;
@@ -31,55 +32,48 @@ export default class MainScene extends Phaser.Scene {
   checkpointData: Object;
   deadlineEngaged: boolean;
   deaths: integer;
+  lastEvent: string;
+  scriptMan: ScriptManager;
 
   constructor() {
     super({ key: 'MainScene' })
   }
 
   create() {
-    const scriptMan = new ScriptManager(this, this.cache.text.get('script'));
-
-    //Set background
-    // @ts-ignore
+    this.debug = false;
+    //Initialize various managers
+    this.scriptMan = new ScriptManager(this, this.cache.text.get('script'));
     this.bgman = new BackgroundManager(this);
-
-    //Initialize Tilemap
     this.map = new TileManager(this);
-
-    //Setup tutorial buttons
     this.mom = new MapObjectsManager(this);
-    this.mom.forEachByName([
-        'key-up', 
-        'key-down',
-        'key-down-2',
-        'keyboard',
-        'idea-1',
-        'idea-2',
-        'idea-3',
-        'idea-4',
-        'idea-5',
-        'bridge-1',
-    ], s => {
-      s.setAlpha(0);
-    });
 
-    this.checkpointData = {};
-
-    //Get spawnpoints
-    this.setPlayerSpawn('playerSpawn');
-    this.setTypewriterSpawn('typewriterSpawn');
-
+    //Set initial spawns
+    if (this.debug) {
+      let spawn = this.mom.getSpawn('dev');
+      this.setSpawn(spawn, spawn);
+    } else {
+      let playerSpawn = this.mom.getSpawn('playerSpawn');
+      let typewriterSpawn = this.mom.getSpawn('typewriterSpawn');
+      this.setSpawn(playerSpawn, typewriterSpawn);
+    }
+    
+    //Spawn Player
     this.writer = new Writer(this, this.spawnLocation.x, this.spawnLocation.y)
-      .setDepth(-100);
-    this.storyText = new StoryText(this);
-    this.storyText.addStoryBlock(`Writer's Block: An essay on motivation. [title-done]`);
-    this.textDisplay = new TextDisplay(this, 20, 10);
+    .setDepth(-100);
 
+    //Initialize story manager and text display
+    this.storyText = new StoryText(this);
+    this.textDisplay = new TextDisplay(this, 20, 10);
+    
+    //Register event handlers
     this.events.on('hold-tw', () => {
       this.storyText.setActive();
     });
     this.events.on('throw-tw', () => {
       this.storyText.setInactive();
+    });
+    this.events.on('died', () => {
+      this.loadCheckpoint();
     });
     
     this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y, this.writer, this.storyText)
@@ -96,7 +90,7 @@ export default class MainScene extends Phaser.Scene {
     this.cam = new CameraManager(this, this.cameras.main);
     this.cam.follow(this.writer);
 
-    scriptMan.registerGameObjects({
+    this.scriptMan.registerGameObjects({
       bgman: this.bgman,
       cam: this.cam,
       writer: this.writer,
@@ -104,10 +98,12 @@ export default class MainScene extends Phaser.Scene {
       deadline: this.deadline,
       blackhole: this.blackhole,
       physics: this.physics,
+      mom: this.mom,
+      scene: this,
       ...this.mom.getMapObjects(),
     });
 
-    scriptMan.registerGameActions({
+    this.scriptMan.registerGameActions({
       log(string) {
         console.log(string);
       },
@@ -118,13 +114,21 @@ export default class MainScene extends Phaser.Scene {
         this[name].setAlpha(0);
       },
       moveCamera(x) {
-        this.cam.move(x);
+        if (typeof x === 'string') {
+          this.cam.move(this.mom.getPointer(x).x)
+        } else {
+          this.cam.move(x);
+        }
       },
       camFollow(name) {
         this.cam.follow(this[name]);
       },
       checkpoint(name) {
-        this.createCheckpoint(name);
+        //Set new spawn
+        let newSpawn = this.mom.getSpawn(name);
+        this.scene.setSpawn(newSpawn, newSpawn);
+        //Set last event
+        this.scene.lastEvent = this.scene.scriptMan.lastEvent;
       },
       fadeBackgroundTo(name) {
         this.bgman.setBackground(name);
@@ -136,15 +140,28 @@ export default class MainScene extends Phaser.Scene {
       },
       addPlayerCollider(name) {
         this.physics.add.collider(this.writer, this[name]);
+        this.physics.add.collider(this.typewriter, this[name]);
       },
       setX(name, x) {
-        this[name].x = x;
+        if (typeof x === 'string') {
+          this[name].x = this.mom.getPointer(x).x;
+        } else {
+          this[name].x = x;
+        }
       },
       setState(name, state, ...args) {
-        this[name].getChildren.forEach(sprite => sprite.setState(state, args));
+        const parsedArgs = args.map(a => {
+          return this[a] || a;
+        });
+        this[name].stateMachine.setState(state, ...parsedArgs);
       },
       destroy(name) {
         this[name].destroy();
+      },
+      getProp(varName, objectName, propertyName) {
+        this.scene.scriptMan.registerGameObjects({
+          [varName]: this.mom.getPointer(objectName)[propertyName],
+        });
       },
     });
     
@@ -170,31 +187,30 @@ export default class MainScene extends Phaser.Scene {
     this.textDisplay.update(this.storyText);
   }
 
-  setPlayerSpawn(name) {
-    const spawn = this.mom.getSpawn(name);
+  setSpawn(player, typewriter) {
     this.spawnLocation = {
-      x: spawn.x,
-      y: spawn.y,
+      x: player.x,
+      y: player.y,
     }
-  }
-
-  setTypewriterSpawn(name) {
-    const spawn = this.mom.getSpawn(name);
     this.typewriterSpawnLocation = {
-      x: spawn.x,
-      y: spawn.y,
+      x: typewriter.x,
+      y: typewriter.y,
     }
   }
 
-  createCheckpoint(name) {
-    //Move spawnpoints
-    this.setPlayerSpawn(name);
-    this.setTypewriterSpawn(name);
-    //Track position in story.
-    //Reset zones after point in story.
-  }
-
-  engageDeadline() {
-    this.deadlineEngaged = true;
+  loadCheckpoint() {
+    //Clear story.
+    this.storyText.clear();
+    //Move player to spawn.
+    this.writer.setPosition(
+      this.spawnLocation.x,
+      this.spawnLocation.y
+    );
+    this.typewriter.setPosition(
+      this.typewriterSpawnLocation.x,
+      this.typewriterSpawnLocation.y
+    );
+    //Re-run last event.
+    this.scriptMan.runEventByName(this.lastEvent);
   }
 }

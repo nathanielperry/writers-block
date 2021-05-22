@@ -2,13 +2,12 @@
     --show(key-up)
 
 #tutorial-2
-    --moveCamera(500)
+    --moveCamera(tutorial)
     --show(key-down)
-
+    `Writer's Block: An essay on motivation. [title-done]`
 #typewriter-get
     --show(keyboard)
     --hide(key-down)
-
 #title-done
     --hide(keyboard)
     --camFollow(writer)
@@ -22,7 +21,7 @@
 #void-1
     --moveCamera(1120)
     `But creation first starts with nothing. [nothing]An empty canvas. The void. [show-void]`
-    --checkpoint(void-checkpoint)
+    --checkpoint(void)
 #nothing
     --fadeBackgroundTo(paper)
 #show-void
@@ -69,23 +68,26 @@
 #death
 
 #dead-line-1
-    --moveCamera(1760)
-    --checkpoint(dead-line-checkpoint)
+    --moveCamera(desert)
+    --setState(deadline, idle)
+    --setX(deadline, deadline-1)
+    --checkpoint(deadline-checkpoint)
     `Thus enters the deadline. [deadline-appears]When time and luxury become detrimental, then you must take them away. The deadline [deadline-start]becomes a raw force, pushing [deadline-jump]until you have no choice. [deadline-faster]`
 #deadline-appears
-    --setX(deadline, 2025)
-    --setState(deadline, jumpTo, 2050)
+    --getProp(deadlineInit, deadline-2, x)
+    --setState(deadline, jumpTo, deadlineInit)
 #deadline-start
-    --setAttribute(deadline, engaged, true)
-    --setState(deadline, approach, 0.15)
+    --setState(deadline, moving, 0.1)
 #deadline-jump
-    --setState(deadline, jump, 16)
+    --setState(deadline, jump, 32)
 #deadline-faster
-    --setState(deadline, approach, 0.2)
+    --setState(deadline, moving, 0.2)
     `Suddenly, you are able to build bridges. [bridge-1]`
 #bridge-1
     --destroy(desert-wall)
-    --show(desert-bridge)
+    --show(bridge-1)
+    --addPlayerCollider(bridge-1-floor)
+    --camFollow(writer)
 
 #giant-leaps-1
     `Immersed fully in your task, your passion burning brightly. [burn1]Giant leaps become possible. You may hit snags, but the deadline [deadline-jump-2]keeps pushing you, and new ideas [idea-5]will come.`
@@ -102,7 +104,7 @@
     `The deadline approaches faster, [deadline-fastest]but breaks will give you vital energy. Find the balance and soon the end will be in sight. [end-in-sight]`
 
 #deadline-fastest
-    --setState(deadline, approach, 0.3)
+    --setState(deadline, moving, 0.3)
 
 #end-in-sight
     --destroy(leaps-wall)

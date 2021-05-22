@@ -7,19 +7,22 @@ export default class StoryText {
     offsetPosition: integer;
 
     constructor(scene: Phaser.Scene) {
-      this.currentPosition = -1;
-      this.offsetPosition = -1;
       this.scene = scene;
-
-      this.story = '';
-      this.pureStory = '';
-
       this.isActive = false;
       this.setInactive();
 
       this.scene.events.on('script-story', str => {
         this.addStoryBlock(str);
       });
+
+      this.clear();
+    }
+
+    clear() {
+      this.currentPosition = -1;
+      this.offsetPosition = -1;
+      this.story = '';
+      this.pureStory = '';
     }
 
     setActive() {
@@ -60,6 +63,7 @@ export default class StoryText {
       const match = this.story.slice(this.offsetPosition).match(/\[(.+?)\]/);
       //If there is a valid event name, emit it.
       if (match !== null) {
+        console.log(match[1]);
         this.scene.events.emit('script-event', match[1]);
         //offsetPosition increased to point at closing bracket.
         this.offsetPosition += match[0].length;
@@ -94,5 +98,4 @@ export default class StoryText {
         }
       }
     }
-
   }

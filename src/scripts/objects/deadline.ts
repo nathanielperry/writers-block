@@ -1,4 +1,10 @@
+import { State, StateMachine } from '../util/StateMachine';
+
+const DEADZONE = 2;
+const SPEED = 0.1;
+
 export default class DeadLine extends Phaser.GameObjects.Rectangle {
+    stateMachine: StateMachine;
     scene: Phaser.Scene;
     velX: integer;
     targetX: integer;
@@ -14,6 +20,14 @@ export default class DeadLine extends Phaser.GameObjects.Rectangle {
         this.jumping = false;
         this.stoppingPoint = -1;
 
+        this.stateMachine = new StateMachine('idle', {
+            idle: new IdleState,
+            jumpTo: new JumpToState,
+            jump: new JumpState,
+            jumpToRelative: new JumpToRelativeState,
+            moving: new MovingState,
+        }, this);
+
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         // @ts-ignore
@@ -22,59 +36,63 @@ export default class DeadLine extends Phaser.GameObjects.Rectangle {
         // this.body.immovable = true;
 
         this.scene.physics.add.overlap(this, this.scene.writer, () => {
-            this.scene.events.emit('story', 'ded');
+            this.scene.events.emit('died');
         });
         //@ts-ignore
         this.scene.physics.add.overlap(this, this.scene.typewriter, () => {
-            this.scene.events.emit('story', 'ded');
+            this.scene.events.emit('died');
         });
     }
 
-    setVelX(velX: integer) {
-        this.jumping = false;
-        this.velX = velX;
-    }
-
-    jumpTo(x) {
-        this.jumping = true;
-        this.targetX = x;
-        setTimeout(() => {
-            this.jumping = false;
-            this.velX = 0.2;
-        }, 1500);
-    }
-
-    jump(x) {
-        this.jumping = true;
-        this.targetX = this.x + x;
-        setTimeout(() => {
-            this.jumping = false;
-            this.velX = 0.2;
-        }, 500);
-    }
-
-    stopAt(x) {
-        this.stoppingPoint = x;
-    }
-
-    resume(velX?) {
-        this.stoppingPoint = -1;
-        this.velX = velX ? velX : this.velX;
-    }
-
     update() {
-        if(this.jumping) {
-            this.x = Phaser.Math.Interpolation.SmootherStep(
-                0.2,
-                this.x,
-                this.targetX,
-            );
-        } else {
-            this.x += this.velX;
-        }
+        this.stateMachine.step();
+    }
+}
 
-        if(this.stoppingPoint > 0) {
-            this.x = Math.min(this.x, this.stoppingPoint);
+class IdleState extends State {
+    //Do Nothing
+}
+
+class JumpToState extends State {
+    enter( { actor }, x) {
+        actor.targetX = x;
+    }
+
+    step({ actor, stateMachine }) {
+        actor.x = Phaser.Math.Interpolation.SmootherStep(
+            0.2,
+            actor.x,
+            actor.targetX,
+        );
+
+        if (Math.abs(actor.targetX - actor.x) < DEADZONE) {
+            stateMachine.setPreviousState();
         }
+    }
+}
+
+class JumpState extends State {
+    enter({ actor, stateMachine }, x) {
+        //Save last state here so we can return to it
+        //at the end of the jumpTo state.
+        const prevState = stateMachine.previousState;
+        stateMachine.setState('jumpTo', actor.x + x);
+        stateMachine.previousState = prevState;
+    }
+}
+
+class MovingState extends State {
+    step({ actor }, speed) {
+        actor.x += speed || SPEED;
+    }
+}
+
+class JumpToRelativeState extends State {
+    enter({ actor, stateMachine }, relativeActor, x) {
+        //Save last state here so we can return to it
+        //at the end of the jumpTo state.
+        const prevState = stateMachine.previousState;
+        stateMachine.setState('jumpTo', relativeActor.x + x);
+        stateMachine.previousState = prevState;
     }
 }

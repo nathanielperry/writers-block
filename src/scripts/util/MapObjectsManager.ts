@@ -5,6 +5,7 @@ export default class MapObjectsManager {
     sprites: Array<Phaser.GameObjects.Sprite>;
     spriteGroups: Object;
     spawns;
+    pointers;
 
     constructor(scene) {
         this.scene = scene;
@@ -27,6 +28,7 @@ export default class MapObjectsManager {
             return acc;
         }, {});
         this.spawns = scene.map.getObjectsOfType('spawnpoint');
+        this.pointers = scene.map.getObjectsOfType('pointer');
     }
 
     forEachByName(names: string | Array<string>, fn: Function) {
@@ -66,5 +68,9 @@ export default class MapObjectsManager {
 
     getSpawn(name) {
         return this.spawns[name];
+    }
+
+    getPointer(name) {
+        return this.pointers[name];
     }
 }

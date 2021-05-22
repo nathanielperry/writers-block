@@ -2,6 +2,7 @@ import MapObjectsManager from "./MapObjectsManager";
 
 export default class ScriptManager {
     script: String;
+    lastEvent: String;
     scene: Phaser.Scene;
     events: Array<{
         name: string,
@@ -17,6 +18,7 @@ export default class ScriptManager {
     constructor(scene: Phaser.Scene, script: string) {
         this.script = script;
         this.events = [];
+        this.lastEvent = '';
         this.scene = scene;
         this.gameObjects = {};
         this.gameActions = {};
@@ -32,6 +34,11 @@ export default class ScriptManager {
 
     getGameObject(name) {
         return this.gameObjects[name];
+    }
+
+    getEventsFromCurrent() {
+        const index = this.events.findIndex(event => event.name === this.lastEvent);
+        return this.events.slice(index);
     }
 
     //Parse #events into objects with the event name and the event content
@@ -55,7 +62,7 @@ export default class ScriptManager {
             if (!isNaN(parseInt(arg))) {
                 return parseInt(arg);
             }    
-            return arg;
+            return arg.trim();
         });
 
     }
@@ -83,10 +90,16 @@ export default class ScriptManager {
         });
     }
 
+    runEventByName(name) {
+        const event = this.events.find(e => e.name === name);
+        this.run(event);
+    }
+
     //Run a parsed event object by emitting an [action, args] 
     //pair for each as a script-action event or a `story string` 
     //as a script-story event
     async run(event) {
+        this.lastEvent = event.name;
         for (const str of event.content) {
             //If string starts with '--' run corresponding action (if exists)
             if(/^--/.test(str)) {

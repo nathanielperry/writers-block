@@ -71,8 +71,10 @@ export default class TileManager {
 
                 // @ts-ignore
                 const sprite = this.scene.add.sprite(o.x, o.y, key, spriteData.frame);
-
-                sprite.setData(spriteData);
+                // sprite.setData(spriteData);
+                
+                // @ts-ignore -- Setting initial alpha from Tiled param
+                sprite.setAlpha(spriteData.alpha != undefined ? spriteData.alpha : 1);
                 sprite.setOrigin(0, 0);
                 // @ts-ignore
                 sprite.name = o.name;

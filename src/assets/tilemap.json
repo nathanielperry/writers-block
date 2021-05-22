@@ -328,7 +328,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"frame",
@@ -471,6 +471,11 @@
                  "id":52,
                  "name":"key-up",
                  "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
                         {
                          "name":"frame",
                          "type":"int",
@@ -790,240 +795,6 @@
                  "y":144
                 }, 
                 {
-                 "gid":15,
-                 "height":16,
-                 "id":89,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2304,
-                 "y":144
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":90,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2320,
-                 "y":144
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":91,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2336,
-                 "y":160
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":92,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2352,
-                 "y":144
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":93,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2304,
-                 "y":160
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":94,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2320,
-                 "y":144
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":95,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2320,
-                 "y":160
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":96,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2352,
-                 "y":160
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":97,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2368,
-                 "y":144
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":98,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2384,
-                 "y":144
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":99,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2400,
-                 "y":160
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":100,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2384,
-                 "y":160
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":101,
-                 "name":"bridge-1-floor",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2368,
-                 "y":160
-                }, 
-                {
                  "height":160,
                  "id":102,
                  "name":"giant-leaps-1",
@@ -1079,269 +850,16 @@
                  "y":80
                 }, 
                 {
-                 "gid":35,
-                 "height":16,
-                 "id":119,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":13
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":32
-                }, 
-                {
-                 "gid":57,
-                 "height":16,
-                 "id":120,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":11
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":112
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":121,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":96
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":122,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":80
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":123,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":48
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":124,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":64
-                }, 
-                {
-                 "gid":35,
-                 "height":16,
-                 "id":125,
-                 "name":"leaps-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":13
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":3536,
-                 "y":16
-                }, 
-                {
-                 "gid":57,
-                 "height":16,
-                 "id":126,
-                 "name":"leaps-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":11
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":3536,
-                 "y":64
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":129,
-                 "name":"leaps-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":3536,
-                 "y":32
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":130,
-                 "name":"leaps-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":3536,
-                 "y":48
-                }, 
-                {
-                 "gid":57,
-                 "height":16,
-                 "id":131,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":11
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":160
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":132,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":144
-                }, 
-                {
-                 "gid":46,
-                 "height":16,
-                 "id":133,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":12
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":128
-                }, 
-                {
-                 "height":0,
-                 "id":140,
-                 "name":"typewriterSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"spawnpoint",
-                 "visible":true,
-                 "width":0,
-                 "x":648,
-                 "y":128
-                }, 
-                {
-                 "height":0,
-                 "id":143,
-                 "name":"playerSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"spawnpoint",
-                 "visible":true,
-                 "width":0,
-                 "x":88,
-                 "y":96
-                }, 
-                {
                  "gid":60,
                  "height":16,
                  "id":144,
                  "name":"idea-5",
                  "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
                         {
                          "name":"frame",
                          "type":"int",
@@ -1361,6 +879,11 @@
                  "name":"idea-5",
                  "properties":[
                         {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
                          "name":"frame",
                          "type":"int",
                          "value":6
@@ -1378,6 +901,11 @@
                  "id":146,
                  "name":"idea-5",
                  "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
                         {
                          "name":"frame",
                          "type":"int",
@@ -1397,6 +925,11 @@
                  "name":"idea-5",
                  "properties":[
                         {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
                          "name":"frame",
                          "type":"int",
                          "value":6
@@ -1414,6 +947,11 @@
                  "id":148,
                  "name":"idea-5",
                  "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
                         {
                          "name":"frame",
                          "type":"int",
@@ -1433,6 +971,11 @@
                  "name":"idea-5",
                  "properties":[
                         {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
                          "name":"frame",
                          "type":"int",
                          "value":6
@@ -1445,150 +988,6 @@
                  "y":96
                 }, 
                 {
-                 "gid":15,
-                 "height":16,
-                 "id":155,
-                 "name":"void-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":1175,
-                 "y":112
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":156,
-                 "name":"void-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":1175,
-                 "y":96
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":157,
-                 "name":"void-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":1175,
-                 "y":128
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":158,
-                 "name":"void-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":1175,
-                 "y":80
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":159,
-                 "name":"desert-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2296,
-                 "y":144
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":160,
-                 "name":"desert-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2296,
-                 "y":128
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":161,
-                 "name":"desert-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2296,
-                 "y":160
-                }, 
-                {
-                 "gid":15,
-                 "height":16,
-                 "id":162,
-                 "name":"desert-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":10
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2296,
-                 "y":112
-                }, 
-                {
                  "height":48,
                  "id":163,
                  "name":"dark-bg",
@@ -1598,60 +997,6 @@
                  "width":48,
                  "x":4384,
                  "y":96
-                }, 
-                {
-                 "gid":57,
-                 "height":16,
-                 "id":164,
-                 "name":"end-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":11
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":5824,
-                 "y":176
-                }, 
-                {
-                 "gid":1,
-                 "height":16,
-                 "id":165,
-                 "name":"discipline-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":14
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":4352,
-                 "y":80
-                }, 
-                {
-                 "gid":3,
-                 "height":16,
-                 "id":166,
-                 "name":"discipline-wall",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":15
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":4368,
-                 "y":80
                 }, 
                 {
                  "height":160,
@@ -1684,14 +1029,14 @@
                 {
                  "height":0,
                  "id":171,
-                 "name":"void-checkpoint",
+                 "name":"void",
                  "point":true,
                  "rotation":0,
                  "type":"spawnpoint",
                  "visible":true,
                  "width":0,
-                 "x":1160,
-                 "y":112
+                 "x":1152,
+                 "y":96
                 }, 
                 {
                  "height":128,
@@ -1709,6 +1054,221 @@
                  "width":48,
                  "x":112,
                  "y":0
+                }, 
+                {
+                 "height":0,
+                 "id":178,
+                 "name":"typewriterSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"spawnpoint",
+                 "visible":true,
+                 "width":0,
+                 "x":648,
+                 "y":128
+                }, 
+                {
+                 "height":0,
+                 "id":179,
+                 "name":"playerSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"spawnpoint",
+                 "visible":true,
+                 "width":0,
+                 "x":88,
+                 "y":112
+                }, 
+                {
+                 "height":0,
+                 "id":181,
+                 "name":"deadline-checkpoint",
+                 "point":true,
+                 "rotation":0,
+                 "type":"spawnpoint",
+                 "visible":true,
+                 "width":0,
+                 "x":2160,
+                 "y":144
+                }, 
+                {
+                 "height":0,
+                 "id":184,
+                 "name":"desert",
+                 "point":true,
+                 "rotation":0,
+                 "type":"pointer",
+                 "visible":true,
+                 "width":0,
+                 "x":2080,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":187,
+                 "name":"tutorial",
+                 "point":true,
+                 "rotation":0,
+                 "type":"pointer",
+                 "visible":true,
+                 "width":0,
+                 "x":464,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":188,
+                 "name":"deadline-1",
+                 "point":true,
+                 "rotation":0,
+                 "type":"pointer",
+                 "visible":true,
+                 "width":0,
+                 "x":2048,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":189,
+                 "name":"deadline-2",
+                 "point":true,
+                 "rotation":0,
+                 "type":"pointer",
+                 "visible":true,
+                 "width":0,
+                 "x":2096,
+                 "y":16
+                }, 
+                {
+                 "height":16,
+                 "id":190,
+                 "name":"bridge-1-floor",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2304,
+                 "y":160
+                }, 
+                {
+                 "height":16,
+                 "id":191,
+                 "name":"bridge-1-floor",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2320,
+                 "y":160
+                }, 
+                {
+                 "height":16,
+                 "id":192,
+                 "name":"bridge-1-floor",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2336,
+                 "y":160
+                }, 
+                {
+                 "height":16,
+                 "id":193,
+                 "name":"bridge-1-floor",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2400,
+                 "y":160
+                }, 
+                {
+                 "height":16,
+                 "id":194,
+                 "name":"bridge-1-floor",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2384,
+                 "y":160
+                }, 
+                {
+                 "height":16,
+                 "id":195,
+                 "name":"bridge-1-floor",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2352,
+                 "y":160
+                }, 
+                {
+                 "height":16,
+                 "id":196,
+                 "name":"bridge-1-floor",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"int",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2368,
+                 "y":160
+                }, 
+                {
+                 "height":0,
+                 "id":199,
+                 "name":"dev",
+                 "point":true,
+                 "rotation":0,
+                 "type":"spawnpoint",
+                 "visible":true,
+                 "width":0,
+                 "x":1008,
+                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1717,7 +1277,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":176,
+ "nextobjectid":200,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

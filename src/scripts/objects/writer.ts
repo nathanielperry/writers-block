@@ -84,7 +84,7 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
 
         if (this.y > 192) {
             //You ded
-            this.scene.events.emit('story', 'ded');
+            this.scene.events.emit('died');
         } 
     }
 }
