@@ -6,19 +6,13 @@ const SPEED = 0.1;
 export default class DeadLine extends Phaser.GameObjects.Rectangle {
     stateMachine: StateMachine;
     scene: Phaser.Scene;
-    velX: integer;
     targetX: integer;
-    jumping: boolean;
-    stoppingPoint: integer;
 
     constructor(scene: Phaser.Scene) {
         super(scene, -100, 0, 5, 192, 0xff0000);
         this.setOrigin(0, 0);
         this.scene = scene;
-        this.velX = 0;
         this.targetX = -100;
-        this.jumping = false;
-        this.stoppingPoint = -1;
 
         this.stateMachine = new StateMachine('idle', {
             idle: new IdleState,
@@ -33,8 +27,6 @@ export default class DeadLine extends Phaser.GameObjects.Rectangle {
         // @ts-ignore
         this.body.allowGravity = false;
         // @ts-ignore
-        // this.body.immovable = true;
-
         this.scene.physics.add.overlap(this, this.scene.writer, () => {
             this.scene.events.emit('died');
         });

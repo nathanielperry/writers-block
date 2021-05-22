@@ -46,6 +46,11 @@ export default class MainScene extends Phaser.Scene {
     this.bgman = new BackgroundManager(this);
     this.map = new TileManager(this);
     this.mom = new MapObjectsManager(this);
+    this.zm = new ZoneManager(this);
+    this.cam = new CameraManager(this, this.cameras.main);
+
+    //Generate event zones from Tiled zone objects
+    this.zm.generateZones();
 
     //Set initial spawns
     if (this.debug) {
@@ -80,16 +85,13 @@ export default class MainScene extends Phaser.Scene {
       .setDepth(-200);
     this.writer.typewriter = this.typewriter;
     this.deadline = new DeadLine(this);
-    this.deadlineEngaged = false;
     this.blackhole = new BlackHole(this, 0, 0);
     this.blackhole.moveTo(78, 3);
     this.deaths = 0;
 
-    this.zm = new ZoneManager(this);
-    this.zm.generateZones();
-    this.cam = new CameraManager(this, this.cameras.main);
     this.cam.follow(this.writer);
 
+    //Register game objects for access in event script
     this.scriptMan.registerGameObjects({
       bgman: this.bgman,
       cam: this.cam,
@@ -103,6 +105,7 @@ export default class MainScene extends Phaser.Scene {
       ...this.mom.getMapObjects(),
     });
 
+    //Register actions that may be called from event script
     this.scriptMan.registerGameActions({
       log(string) {
         console.log(string);
