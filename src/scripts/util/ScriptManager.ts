@@ -107,17 +107,15 @@ export default class ScriptManager {
                 args = this.parseEventArgs(args.split(','));
                 await this.gameActions[action].bind(this.gameObjects)(...args);
             //If string starts and ends with `backticks`, send script-story event with contents
-            } else {
-                if(/^`.+`$/.test(str)) {
-                    let storyString = str.slice(1, str.length - 1);
-                    storyString = this.interpolateStoryBlock(storyString);
-                    this.scene.events.emit('script-story', storyString);
-                }
+            } else if(/^`.+`$/.test(str)) {
+                let storyString = str.slice(1, str.length - 1);
+                storyString = this.interpolateStoryBlock(storyString);
+                this.scene.events.emit('script-story', storyString);
             }
         }
     }
 
-    //Register new game objects for acces within script events
+    //Register new game objects for access within script events
     registerGameObjects(gameObjects) {
         Object.entries(gameObjects).forEach(gameObject => {
             const [key, value] = gameObject;

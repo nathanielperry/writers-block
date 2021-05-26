@@ -1,8 +1,7 @@
 import StoryText from "../objects/storyText";
-import TutorialObjects from "../objects/tutorialObjects";
 import Typewriter from "../objects/typewriter";
-import Writer from "../objects/writer"
-import BlackHole from "../objects/blackhole"
+import Writer from "../objects/writer";
+import BlackHole from "../objects/blackhole";
 import CameraManager from "../util/CameraManager";
 import TileManager from "../util/TileManager";
 import MapObjectsManager from "../util/MapObjectsManager";
@@ -45,9 +44,10 @@ export default class MainScene extends Phaser.Scene {
     this.scriptMan = new ScriptManager(this, this.cache.text.get('script'));
     this.bgman = new BackgroundManager(this);
     this.map = new TileManager(this);
+    
+    //These both reference TileManager internally
     this.mom = new MapObjectsManager(this);
     this.zm = new ZoneManager(this);
-    this.cam = new CameraManager(this, this.cameras.main);
 
     //Generate event zones from Tiled zone objects
     this.zm.generateZones();
@@ -71,17 +71,11 @@ export default class MainScene extends Phaser.Scene {
     this.textDisplay = new TextDisplay(this, 20, 10);
     
     //Register event handlers
-    this.events.on('hold-tw', () => {
-      this.storyText.setActive();
-    });
-    this.events.on('throw-tw', () => {
-      this.storyText.setInactive();
-    });
     this.events.on('died', () => {
       this.loadCheckpoint();
     });
     
-    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y, this.writer, this.storyText)
+    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y, this.writer)
       .setDepth(-200);
     this.writer.typewriter = this.typewriter;
     this.deadline = new DeadLine(this);
@@ -89,6 +83,13 @@ export default class MainScene extends Phaser.Scene {
     this.blackhole.moveTo(78, 3);
     this.deaths = 0;
 
+    
+    //Set ground collision for writer and typewriter
+    this.map.collide(this.writer);
+    this.map.collide(this.typewriter);
+    
+    //References writer and typewriter in constructor
+    this.cam = new CameraManager(this, this.cameras.main);
     this.cam.follow(this.writer);
 
     //Register game objects for access in event script
@@ -118,7 +119,7 @@ export default class MainScene extends Phaser.Scene {
       },
       moveCamera(x) {
         if (typeof x === 'string') {
-          this.cam.move(this.mom.getPointer(x).x)
+          this.cam.move(this.mom.getPointer(x).x);
         } else {
           this.cam.move(x);
         }
@@ -167,9 +168,6 @@ export default class MainScene extends Phaser.Scene {
         });
       },
     });
-    
-    this.map.collide(this.writer);
-    this.map.collide(this.typewriter);
 
     this.input.keyboard.on('keydown', (event) => {
       if (event.key === 'Control') {

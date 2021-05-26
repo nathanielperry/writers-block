@@ -9,7 +9,7 @@ export default class Typewriter extends Phaser.Physics.Arcade.Sprite {
     writer: Writer;
     hasBeenGot: boolean;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, writer, story) {
+    constructor(scene: Phaser.Scene, x: number, y: number, writer) {
         super(scene, x, y, 'typewriter');
         scene.add.existing(this);
         scene.physics.add.existing(this);

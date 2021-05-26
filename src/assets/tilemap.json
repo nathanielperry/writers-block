@@ -511,6 +511,11 @@
                  "name":"keyboard",
                  "properties":[
                         {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
                          "name":"frame",
                          "type":"int",
                          "value":4
@@ -527,6 +532,11 @@
                  "id":56,
                  "name":"keyboard",
                  "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
                         {
                          "name":"frame",
                          "type":"int",
@@ -1015,6 +1025,11 @@
                  "name":"key-down-2",
                  "properties":[
                         {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
                          "name":"frame",
                          "type":"int",
                          "value":1
@@ -1077,7 +1092,7 @@
                  "visible":true,
                  "width":0,
                  "x":88,
-                 "y":112
+                 "y":96
                 }, 
                 {
                  "height":0,
@@ -1277,7 +1292,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":200,
+ "nextobjectid":201,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

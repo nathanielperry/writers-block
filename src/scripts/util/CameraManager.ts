@@ -70,7 +70,7 @@ export default class CameraManager {
 
         //@ts-ignore
         if (this.scene.typewriter.x < this.cam.scrollX) {
-            this.scene.events.emit('story', 'ded');
+            this.scene.events.emit('died');
         }
     }
 }

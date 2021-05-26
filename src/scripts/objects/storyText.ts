@@ -16,6 +16,14 @@ export default class StoryText {
       });
 
       this.clear();
+
+      //Register event listeners
+      this.scene.events.on('hold-tw', () => {
+        this.setActive();
+      });
+      this.scene.events.on('throw-tw', () => {
+        this.setInactive();
+      });
     }
 
     clear() {
@@ -82,7 +90,7 @@ export default class StoryText {
     autoType() {
       setTimeout(() => {
         this.addLetter(this.getCurrentLetter());
-      }, 100);
+      }, 10);
     }
 
     addLetter(letter) {
