@@ -28,12 +28,16 @@ export default class ZoneManager {
             }
 
             this.zones.push(zoneObj);
+        });
+    }
 
+    setZoneCollider(sprite) {
+        Object.values(this.zones).forEach((zoneObj, i) => {
             //@ts-ignore
-            this.scene.physics.add.overlap(this.scene.writer, newZone, () => {
+            this.scene.physics.add.overlap(sprite, zoneObj.zone, () => {
                 if (!this.zones[i].triggered) {
                     // @ts-ignore
-                    this.scene.events.emit('script-event', zone.name);
+                    this.scene.events.emit('script-event', zoneObj.name);
                     this.zones[i].triggered = true;
                 }
             });

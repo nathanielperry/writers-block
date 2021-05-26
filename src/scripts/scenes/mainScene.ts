@@ -82,7 +82,7 @@ export default class MainScene extends Phaser.Scene {
     this.blackhole.moveTo(78, 3);
     
     const deathOnTouchGroup = this.add.group(this.deadline);
-    
+  
     //Register event handlers
     this.events.on('died', () => {
       this.loadCheckpoint();
@@ -95,6 +95,9 @@ export default class MainScene extends Phaser.Scene {
     this.map.collide(this.writer);
     this.map.collide(this.typewriter);
     
+    //Set writer to trigger event zones
+    this.zm.setZoneCollider(this.writer);
+
     //References writer and typewriter in constructor
     this.cam = new CameraManager(this, this.cameras.main);
     this.cam.follow(this.writer);
