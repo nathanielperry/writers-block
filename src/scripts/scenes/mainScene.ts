@@ -40,6 +40,8 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
     this.debug = false;
+    this.deaths = 0;
+
     //Initialize various managers
     this.scriptMan = new ScriptManager(this, this.cache.text.get('script'));
     this.bgman = new BackgroundManager(this);
@@ -70,19 +72,24 @@ export default class MainScene extends Phaser.Scene {
     this.storyText = new StoryText(this);
     this.textDisplay = new TextDisplay(this, 20, 10);
     
+    //Spawn typewriter, deadline, and blackhole
+    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y, this.writer)
+    .setDepth(-200);
+    this.writer.typewriter = this.typewriter;
+    this.deadline = new DeadLine(this);
+    
+    this.blackhole = new BlackHole(this, 0, 0);
+    this.blackhole.moveTo(78, 3);
+    
+    const deathOnTouchGroup = this.add.group(this.deadline);
+    
     //Register event handlers
     this.events.on('died', () => {
       this.loadCheckpoint();
     });
-    
-    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y, this.writer)
-      .setDepth(-200);
-    this.writer.typewriter = this.typewriter;
-    this.deadline = new DeadLine(this);
-    this.blackhole = new BlackHole(this, 0, 0);
-    this.blackhole.moveTo(78, 3);
-    this.deaths = 0;
-
+    this.physics.add.overlap([this.writer, this.typewriter], deathOnTouchGroup, () => {
+      this.events.emit('died');
+    });
     
     //Set ground collision for writer and typewriter
     this.map.collide(this.writer);

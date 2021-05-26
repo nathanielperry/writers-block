@@ -26,14 +26,6 @@ export default class DeadLine extends Phaser.GameObjects.Rectangle {
         this.scene.physics.add.existing(this);
         // @ts-ignore
         this.body.allowGravity = false;
-        // @ts-ignore
-        this.scene.physics.add.overlap(this, this.scene.writer, () => {
-            this.scene.events.emit('died');
-        });
-        //@ts-ignore
-        this.scene.physics.add.overlap(this, this.scene.typewriter, () => {
-            this.scene.events.emit('died');
-        });
     }
 
     update() {
