@@ -18,10 +18,10 @@ export default class StoryText {
       this.clear();
 
       //Register event listeners
-      this.scene.events.on('hold-tw', () => {
+      this.scene.events.on('showStoryText', () => {
         this.setActive();
       });
-      this.scene.events.on('throw-tw', () => {
+      this.scene.events.on('hideStoryText', () => {
         this.setInactive();
       });
     }
@@ -34,6 +34,7 @@ export default class StoryText {
     }
 
     setActive() {
+      console.log('hello');
       this.isActive = true;
     }
     

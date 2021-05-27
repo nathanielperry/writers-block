@@ -39,7 +39,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.debug = false;
+    this.debug = true;
     this.deaths = 0;
 
     //Initialize various managers
@@ -73,9 +73,8 @@ export default class MainScene extends Phaser.Scene {
     this.textDisplay = new TextDisplay(this, 20, 10);
     
     //Spawn typewriter, deadline, and blackhole
-    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y, this.writer)
+    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y)
     .setDepth(-200);
-    this.writer.typewriter = this.typewriter;
     this.deadline = new DeadLine(this);
     
     this.blackhole = new BlackHole(this, 0, 0);

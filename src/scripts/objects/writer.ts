@@ -8,11 +8,12 @@ const MAXVELX = 150;
 const MAXVELY = 400;
 const SLOWED_MAXVELX = 90;
 
+const GRAB_RADIUS = 30;
+
 export default class Writer extends Phaser.Physics.Arcade.Sprite {
     stateMachine: StateMachine;
     keys: Phaser.Types.Input.Keyboard.CursorKeys;
-    isTypewriterOverlapped: boolean;
-    typewriter: any;
+    heldItem;
     direction: integer;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -21,6 +22,7 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.direction = 1;
+        this.heldItem = null;
         this.keys = scene.input.keyboard.createCursorKeys();
         this.stateMachine = new StateMachine('idle', {
             idle: new IdleState,
@@ -33,10 +35,7 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
             .setMaxVelocity(300, 400);
 
         this.scene.input.keyboard.on('keydown-DOWN', () => {
-            if (this.scene.physics.overlap(this, this.typewriter)) {
-                if (this.isTypewriterHeld()) this.stateMachine.setState('freeze');
-                this.typewriter.toggleHeld();
-            }
+            this.handlePlayerHold();
         });
     
         //preload animation
@@ -66,20 +65,41 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
         });
     }
 
-    isTypewriterHeld() {
-        return this.typewriter.stateMachine.currentState == 'held';
-    }
-
     getWalkSpeed() {
-        return this.isTypewriterHeld() ? SLOWEDWALKSPEED : WALKSPEED;
+        return this.heldItem ? SLOWEDWALKSPEED : WALKSPEED;
     }
     
     getJumpHeight() {
-        return this.isTypewriterHeld() ? SLOWEDJUMPHEIGHT : JUMPHEIGHT;
+        return this.heldItem ? SLOWEDJUMPHEIGHT : JUMPHEIGHT;
+    }
+
+    handlePlayerHold() {
+        if (this.heldItem) {
+            this.heldItem.stateMachine.setState('thrown', this);
+            this.heldItem = null;
+        } else {
+            //Pickup Logic
+            //Get array of holdable objects in range
+            const physicsObjects = this.scene.physics.overlapCirc(this.x, this.y, GRAB_RADIUS);
+            //@ts-ignore -- filter gives not callable error
+            const grabbableObjects = physicsObjects
+                .map(body => {
+                    return body.gameObject;
+                })
+                .filter(gameObject => {
+                    return gameObject.isGrabbable;
+                });
+
+            if (grabbableObjects.length > 0) {
+                //Grab random object from list
+                this.heldItem = grabbableObjects[Math.floor(Math.random() * grabbableObjects.length)];
+                this.heldItem.stateMachine.setState('held', this);
+            }
+        }
     }
 
     update() {
-        this.setMaxVelocity(this.isTypewriterHeld() ? SLOWED_MAXVELX : MAXVELX, MAXVELY);
+        this.setMaxVelocity(this.heldItem ? SLOWED_MAXVELX : MAXVELX, MAXVELY);
         this.stateMachine.step();
 
         if (this.y > 192) {
