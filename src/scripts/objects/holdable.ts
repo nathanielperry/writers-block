@@ -10,10 +10,13 @@ export default class HoldableBehavior {
         this.holder = null;
         this.isGrabbable = true;
         this.stateMachine = new StateMachine('idle', {
-            idle: new IdleState,
-            thrown: new ThrownState,
-            held: new HeldState,
-        }, actor);
+                idle: new IdleState,
+                thrown: new ThrownState,
+                held: new HeldState,
+            }, actor
+        );
+
+        actor.stateMachineSystem.addStateMachine("holdable", this.stateMachine);
 
         this.isHeld = false;
     }

@@ -1,10 +1,11 @@
 import HoldableBehavior from '../objects/holdable';
+import { StateMachineSystem } from '../util/StateMachine';
 
 const DRAG = 200;
 
 export default class Typewriter extends Phaser.Physics.Arcade.Sprite {
     hasBeenGot: boolean;
-    stateMachine: null;
+    stateMachineSystem: StateMachineSystem;
     isHeld: Boolean;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -12,6 +13,7 @@ export default class Typewriter extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        this.stateMachineSystem = new StateMachineSystem();
         this.setMaxVelocity(250, 300);
         this.hasBeenGot = false;
 
@@ -20,8 +22,7 @@ export default class Typewriter extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        //@ts-ignore
-        this.stateMachine.step();
+        this.stateMachineSystem.step();
 
         if (this.isHeld) {
             this.scene.events.emit('showStoryText');

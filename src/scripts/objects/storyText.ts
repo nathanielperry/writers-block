@@ -34,7 +34,6 @@ export default class StoryText {
     }
 
     setActive() {
-      console.log('hello');
       this.isActive = true;
     }
     

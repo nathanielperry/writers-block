@@ -11,7 +11,7 @@ const SLOWED_MAXVELX = 90;
 const GRAB_RADIUS = 30;
 
 export default class Writer extends Phaser.Physics.Arcade.Sprite {
-    stateMachine: StateMachine;
+    stateMachines: Array<StateMachine>;
     keys: Phaser.Types.Input.Keyboard.CursorKeys;
     heldItem;
     direction: integer;
@@ -24,12 +24,14 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
         this.direction = 1;
         this.heldItem = null;
         this.keys = scene.input.keyboard.createCursorKeys();
-        this.stateMachine = new StateMachine('idle', {
-            idle: new IdleState,
-            walk: new WalkState,
-            jump: new JumpState,
-            freeze: new FreezeState,
-        }, this);
+        this.stateMachines = [
+            new StateMachine('idle', {
+                idle: new IdleState,
+                walk: new WalkState,
+                jump: new JumpState,
+                freeze: new FreezeState,
+            }, this),
+        ];
 
         this.setDragX(700)
             .setMaxVelocity(300, 400);
@@ -100,7 +102,7 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         this.setMaxVelocity(this.heldItem ? SLOWED_MAXVELX : MAXVELX, MAXVELY);
-        this.stateMachine.step();
+        this.stateMachines.forEach(sm => sm.step());
 
         if (this.y > 192) {
             //You ded

@@ -4,6 +4,33 @@ interface state {
     exit: Function,
 }
 
+export class StateMachineSystem {
+    machines: {
+        [index: string]: StateMachine;
+    }
+    actor: any;
+
+    constructor(machines = {}) {
+        this.machines = machines;
+    }
+
+    setState(machineID, state) {
+        this.machines[machineID].setState(state);
+    }
+    
+    step() {
+        Object.values(this.machines).forEach(sm => sm.step());
+    }
+
+    addStateMachine(name, machine) {
+        this.machines[name] = machine;
+    }
+
+    removeStateMachine(name) {
+        delete this.machines[name];
+    }
+}
+
 export class StateMachine {
     states: {
         [index: string]: state;
