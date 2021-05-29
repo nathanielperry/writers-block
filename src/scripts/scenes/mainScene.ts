@@ -81,12 +81,13 @@ export default class MainScene extends Phaser.Scene {
     this.blackhole.moveTo(78, 3);
     
     const deathOnTouchGroup = this.add.group(this.deadline);
+    const vulnerableGroup = this.add.group(this.writer, this.typewriter);
   
     //Register event handlers
     this.events.on('died', () => {
       this.loadCheckpoint();
     });
-    this.physics.add.overlap([this.writer, this.typewriter], deathOnTouchGroup, () => {
+    this.physics.add.overlap(vulnerableGroup, deathOnTouchGroup, () => {
       this.events.emit('died');
     });
     

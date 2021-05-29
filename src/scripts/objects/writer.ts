@@ -1,4 +1,6 @@
+import Entity from '../objects/entity';
 import { State, StateMachine } from '../util/StateMachine';
+
 const WALKSPEED: integer = 300;
 const JUMPHEIGHT: integer = 200;
 const SLOWEDWALKSPEED: integer = 90;
@@ -10,28 +12,25 @@ const SLOWED_MAXVELX = 90;
 
 const GRAB_RADIUS = 30;
 
-export default class Writer extends Phaser.Physics.Arcade.Sprite {
-    stateMachines: Array<StateMachine>;
+export default class Writer extends Entity {
     keys: Phaser.Types.Input.Keyboard.CursorKeys;
-    heldItem;
     direction: integer;
+    heldItem;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'writer');
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
 
         this.direction = 1;
         this.heldItem = null;
         this.keys = scene.input.keyboard.createCursorKeys();
-        this.stateMachines = [
-            new StateMachine('idle', {
+        this.addStateMachine('platform', 'idle', 
+            {
                 idle: new IdleState,
                 walk: new WalkState,
                 jump: new JumpState,
                 freeze: new FreezeState,
-            }, this),
-        ];
+            }
+        );
 
         this.setDragX(700)
             .setMaxVelocity(300, 400);
@@ -77,7 +76,7 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
 
     handlePlayerHold() {
         if (this.heldItem) {
-            this.heldItem.stateMachine.setState('thrown', this);
+            this.heldItem.setState('holdable', 'thrown', this);
             this.heldItem = null;
         } else {
             //Pickup Logic
@@ -95,14 +94,14 @@ export default class Writer extends Phaser.Physics.Arcade.Sprite {
             if (grabbableObjects.length > 0) {
                 //Grab random object from list
                 this.heldItem = grabbableObjects[Math.floor(Math.random() * grabbableObjects.length)];
-                this.heldItem.stateMachine.setState('held', this);
+                this.heldItem.setState('holdable', 'held', this);
             }
         }
     }
 
     update() {
+        super.update();
         this.setMaxVelocity(this.heldItem ? SLOWED_MAXVELX : MAXVELX, MAXVELY);
-        this.stateMachines.forEach(sm => sm.step());
 
         if (this.y > 192) {
             //You ded

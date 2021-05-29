@@ -1,7 +1,6 @@
-import { State, StateMachine } from '../util/StateMachine';
+import { State } from '../util/StateMachine';
 
 export default class HoldableBehavior {
-    stateMachine: StateMachine;
     holder;
     isGrabbable;
     isHeld;
@@ -9,14 +8,14 @@ export default class HoldableBehavior {
     constructor(actor) {
         this.holder = null;
         this.isGrabbable = true;
-        this.stateMachine = new StateMachine('idle', {
+
+        actor.addStateMachine('holdable', 'idle', 
+            {
                 idle: new IdleState,
                 thrown: new ThrownState,
                 held: new HeldState,
-            }, actor
+            }
         );
-
-        actor.stateMachineSystem.addStateMachine("holdable", this.stateMachine);
 
         this.isHeld = false;
     }
@@ -41,7 +40,7 @@ class ThrownState extends State {
         actor.setVelocityX((60 + Math.abs(velX)) * direction);
         actor.setVelocityY(-115 - (Math.abs(velY)));
 
-        actor.stateMachine.setState('idle');
+        actor.setState('holdable', 'idle');
     }
 }
 

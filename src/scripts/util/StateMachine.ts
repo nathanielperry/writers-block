@@ -10,20 +10,25 @@ export class StateMachineSystem {
     }
     actor: any;
 
-    constructor(machines = {}) {
+    constructor(actor, machines = {}) {
+        this.actor = actor;
         this.machines = machines;
     }
 
-    setState(machineID, state) {
-        this.machines[machineID].setState(state);
+    setState(machineID, state, ...args) {
+        this.machines[machineID].setState(state, ...args);
     }
-    
+
     step() {
         Object.values(this.machines).forEach(sm => sm.step());
     }
 
-    addStateMachine(name, machine) {
-        this.machines[name] = machine;
+    addStateMachine(name, initial, states) {
+        this.machines[name] = new StateMachine(
+            initial, 
+            states, 
+            this.actor
+        );
     }
 
     removeStateMachine(name) {
