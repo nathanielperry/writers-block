@@ -31,14 +31,7 @@ export default class BackgroundManager {
         this.current = 'blueprint';
         this.setBackground('blueprint', true);
     }
-
-    static preload(scene) {
-        // scene.load.image('paper', 'assets/img/paper.png');
-        // scene.load.image('mountains', 'assets/img/mountains.png');
-        // scene.load.image('blueprint', 'assets/img/blueprint.png');
-        // scene.load.image('dark', 'assets/img/dark.png');
-    }
-
+    
     //Create background
     createTileSprite(key) {
         const bg = this.scene.add.tileSprite(0, 0, 9999, 192, key);

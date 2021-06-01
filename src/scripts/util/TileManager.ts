@@ -15,11 +15,6 @@ export default class TileManager {
         this.map.setCollisionBetween(0, 999, true, true, 'ground');
     }
 
-    static preload(scene: Phaser.Scene) {
-        // scene.load.image('tileset', '../../assets/img/tileset.png');
-        // scene.load.tilemapTiledJSON('tilemap', '../../assets/tilemap.json');
-    }
-
     //set collision with actor
     collide(actor) {
         this.scene.physics.add.collider(actor, this.map.getLayer('ground').tilemapLayer);

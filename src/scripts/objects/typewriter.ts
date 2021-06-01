@@ -5,12 +5,15 @@ const DRAG = 200;
 
 export default class Typewriter extends Entity {
     hasBeenGot: boolean;
+    spawn: { x: integer, y: integer }
     isHeld: Boolean;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'typewriter');
 
+        this.spawn = { x, y };
         this.setMaxVelocity(250, 300);
+        this.depth = -200;
         this.hasBeenGot = false;
 
         //Add components

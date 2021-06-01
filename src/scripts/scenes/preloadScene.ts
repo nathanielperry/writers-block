@@ -1,5 +1,4 @@
-import BackgroundManager from '../util/BackgroundManager';
-import TileManager from '../util/TileManager';
+import MapManager from '../util/map/MapManager';
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -34,9 +33,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('dark', 'assets/img/dark.png');
 
     this.load.text('script', 'assets/script.txt');
-
-    TileManager.preload(this);
-    BackgroundManager.preload(this);
   }
 
   create() {

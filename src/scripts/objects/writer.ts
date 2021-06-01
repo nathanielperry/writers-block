@@ -15,16 +15,20 @@ const GRAB_RADIUS = 30;
 export default class Writer extends Entity {
     keys: Phaser.Types.Input.Keyboard.CursorKeys;
     direction: integer;
+    spawn: { x: integer, y: integer }
     heldItem;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'writer');
 
+        this.spawn = { x, y };
         this.direction = 1;
+        this.depth = -100;
         this.heldItem = null;
         this.keys = scene.input.keyboard.createCursorKeys();
         this.addStateMachine('platform', 'idle', 
             {
+                spawn: new SpawnState,
                 idle: new IdleState,
                 walk: new WalkState,
                 jump: new JumpState,
@@ -107,6 +111,13 @@ export default class Writer extends Entity {
             //You ded
             this.scene.events.emit('died');
         } 
+    }
+}
+
+class SpawnState extends State {
+    enter({ actor, stateMachine }) {
+        actor.setPosition(actor.spawn.x, actor.spawn.y);
+        stateMachine.setState('idle');
     }
 }
 

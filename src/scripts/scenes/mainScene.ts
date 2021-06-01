@@ -3,13 +3,13 @@ import Typewriter from "../objects/typewriter";
 import Writer from "../objects/writer";
 import BlackHole from "../objects/blackhole";
 import CameraManager from "../util/CameraManager";
-import TileManager from "../util/TileManager";
-import MapObjectsManager from "../util/MapObjectsManager";
 import BackgroundManager from "../util/BackgroundManager";
 import DeadLine from "../objects/deadline";
 import TextDisplay from "../objects/textDisplay";
-import ZoneManager from "../util/ZoneManager";
 import ScriptManager from "../util/ScriptManager";
+import MapManager from "../util/map/MapManager";
+
+import levels from '../util/map/levels';
 
 export default class MainScene extends Phaser.Scene {
   debug: Boolean;
@@ -21,11 +21,9 @@ export default class MainScene extends Phaser.Scene {
   storyText: StoryText;
   textDisplay: TextDisplay;
   cam: CameraManager;
-  map: TileManager;
-  mom: MapObjectsManager;
+  mapManager: MapManager;
   blackhole: BlackHole;
   deadline: DeadLine;
-  zm: ZoneManager;
   bgman: any;
   spawns: any;
   checkpointData: Object;
@@ -45,76 +43,72 @@ export default class MainScene extends Phaser.Scene {
     //Initialize various managers
     this.scriptMan = new ScriptManager(this, this.cache.text.get('script'));
     this.bgman = new BackgroundManager(this);
-    this.map = new TileManager(this);
+    this.mapManager = new MapManager(this);
     
-    //These both reference TileManager internally
-    this.mom = new MapObjectsManager(this);
-    this.zm = new ZoneManager(this);
-
-    //Generate event zones from Tiled zone objects
-    this.zm.generateZones();
+    this.mapManager.loadLevel(levels[0]);
 
     //Set initial spawns
+    let playerSpawn, typewriterSpawn;
     if (this.debug) {
-      let spawn = this.mom.getSpawn('dev');
-      this.setSpawn(spawn, spawn);
+      playerSpawn = this.mapManager.getMapObject('dev');
+      typewriterSpawn = this.mapManager.getMapObject('dev');
     } else {
-      let playerSpawn = this.mom.getSpawn('playerSpawn');
-      let typewriterSpawn = this.mom.getSpawn('typewriterSpawn');
-      this.setSpawn(playerSpawn, typewriterSpawn);
-    }
+      playerSpawn = this.mapManager.getMapObject('playerSpawn');
+      typewriterSpawn = this.mapManager.getMapObject('typewriterSpawn');
+    }    
     
     //Spawn Player
-    this.writer = new Writer(this, this.spawnLocation.x, this.spawnLocation.y)
-    .setDepth(-100);
+    this.writer = new Writer(this, playerSpawn.x, playerSpawn.y);
 
     //Initialize story manager and text display
     this.storyText = new StoryText(this);
     this.textDisplay = new TextDisplay(this, 20, 10);
     
     //Spawn typewriter, deadline, and blackhole
-    this.typewriter = new Typewriter(this, this.typewriterSpawnLocation.x, this.typewriterSpawnLocation.y)
-    .setDepth(-200);
+    this.typewriter = new Typewriter(this, typewriterSpawn.x, typewriterSpawn.y);
     this.deadline = new DeadLine(this);
-    
     this.blackhole = new BlackHole(this, 0, 0);
     this.blackhole.moveTo(78, 3);
     
+    //Set ground collision for writer and typewriter
+    this.mapManager.addLayerCollider(this.writer, 'ground');
+    this.mapManager.addLayerCollider(this.typewriter, 'ground');
+
+    //Setup overlaps to detect death state
     const deathOnTouchGroup = this.add.group(this.deadline);
     const vulnerableGroup = this.add.group(this.writer, this.typewriter);
+    this.physics.add.overlap(vulnerableGroup, deathOnTouchGroup, () => {
+      this.events.emit('died');
+    });
   
     //Register event handlers
     this.events.on('died', () => {
       this.loadCheckpoint();
     });
-    this.physics.add.overlap(vulnerableGroup, deathOnTouchGroup, () => {
-      this.events.emit('died');
-    });
-    
-    //Set ground collision for writer and typewriter
-    this.map.collide(this.writer);
-    this.map.collide(this.typewriter);
     
     //Set writer to trigger event zones
-    this.zm.setZoneCollider(this.writer);
+    this.mapManager.getMapObjectsOfType('zone').forEach(zone => {      
+      //@ts-ignore
+      zone.setZoneCollider(this.writer);
+    });
 
     //References writer and typewriter in constructor
     this.cam = new CameraManager(this, this.cameras.main);
     this.cam.follow(this.writer);
 
-    //Register game objects for access in event script
-    this.scriptMan.registerGameObjects({
-      bgman: this.bgman,
-      cam: this.cam,
-      writer: this.writer,
-      typewriter: this.typewriter,
-      deadline: this.deadline,
-      blackhole: this.blackhole,
-      physics: this.physics,
-      mom: this.mom,
-      scene: this,
-      ...this.mom.getMapObjects(),
-    });
+    // //Register game objects for access in event script
+    // this.scriptMan.registerGameObjects({
+    //   bgman: this.bgman,
+    //   cam: this.cam,
+    //   writer: this.writer,
+    //   typewriter: this.typewriter,
+    //   deadline: this.deadline,
+    //   blackhole: this.blackhole,
+    //   physics: this.physics,
+    //   mom: this.mom,
+    //   scene: this,
+    //   ...this.mapManager.getMapObjects(),
+    // });
 
     //Register actions that may be called from event script
     this.scriptMan.registerGameActions({
@@ -198,28 +192,19 @@ export default class MainScene extends Phaser.Scene {
     this.textDisplay.update(this.storyText);
   }
 
-  setSpawn(player, typewriter) {
-    this.spawnLocation = {
-      x: player.x,
-      y: player.y,
-    }
-    this.typewriterSpawnLocation = {
-      x: typewriter.x,
-      y: typewriter.y,
-    }
+  setSpawn(position) {
+    this.writer.spawn = position;
+    this.typewriter.spawn = position;
   }
 
   loadCheckpoint() {
     //Clear story.
     this.storyText.clear();
     //Move player to spawn.
-    this.writer.setPosition(
-      this.spawnLocation.x,
-      this.spawnLocation.y
-    );
+    this.writer.setState('platform', 'spawn');
     this.typewriter.setPosition(
-      this.typewriterSpawnLocation.x,
-      this.typewriterSpawnLocation.y
+      this.typewriter.spawn.x,
+      this.typewriter.spawn.y,
     );
     //Re-run last event.
     this.scriptMan.runEventByName(this.lastEvent);
