@@ -1,8 +1,8 @@
 export default class MapZone extends Phaser.GameObjects.Zone {
     triggered: boolean;
 
-    constructor(scene, mapObject) {
-        const { x, y, width, height } = mapObject;
+    constructor(scene, tiledObject) {      
+        const { x, y, width, height } = tiledObject;
         super(scene, x, y, width, height);
 
         scene.physics.add.existing(this);

@@ -20,7 +20,7 @@ export default class MainScene extends Phaser.Scene {
   ground: Phaser.GameObjects.Rectangle;
   storyText: StoryText;
   textDisplay: TextDisplay;
-  cam: CameraManager;
+  camManager: CameraManager;
   mapManager: MapManager;
   blackhole: BlackHole;
   deadline: DeadLine;
@@ -37,7 +37,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.debug = true;
+    this.debug = false;
     this.deaths = 0;
 
     //Initialize various managers
@@ -93,29 +93,26 @@ export default class MainScene extends Phaser.Scene {
     });
 
     //References writer and typewriter in constructor
-    this.cam = new CameraManager(this, this.cameras.main);
-    this.cam.follow(this.writer);
+    this.camManager = new CameraManager(this, this.cameras.main);
+    this.camManager.follow(this.writer);
 
-    // //Register game objects for access in event script
-    // this.scriptMan.registerGameObjects({
-    //   bgman: this.bgman,
-    //   cam: this.cam,
-    //   writer: this.writer,
-    //   typewriter: this.typewriter,
-    //   deadline: this.deadline,
-    //   blackhole: this.blackhole,
-    //   physics: this.physics,
-    //   mom: this.mom,
-    //   scene: this,
-    //   ...this.mapManager.getMapObjects(),
-    // });
+    //Register game actions
+    //LOG -- Console log a string
+    this.events.on('action-log', string => {
+      console.log(string);
+    });
 
-    //Register actions that may be called from event script
+    //WAIT -- Pause script for x seconds
+    this.events.on('action-wait', seconds => {
+      this.events.emit('scriptPause');
+      setTimeout(() => {
+        this.events.emit('scriptResume');
+      }, seconds * 1000);
+    });
+
     this.scriptMan.registerGameActions({
-      log(string) {
-        console.log(string);
-      },
       show(name) {
+        console.log(name);
         this[name].setAlpha(1);
       }, 
       hide(name) {
@@ -123,13 +120,13 @@ export default class MainScene extends Phaser.Scene {
       },
       moveCamera(x) {
         if (typeof x === 'string') {
-          this.cam.move(this.mom.getPointer(x).x);
+          this.camManager.move(this.mom.getPointer(x).x);
         } else {
-          this.cam.move(x);
+          this.camManager.move(x);
         }
       },
       camFollow(name) {
-        this.cam.follow(this[name]);
+        this.camManager.follow(this[name]);
       },
       checkpoint(name) {
         //Set new spawn
@@ -185,7 +182,7 @@ export default class MainScene extends Phaser.Scene {
   update() {
     this.writer.update();
     this.typewriter.update();
-    this.cam.update();
+    this.camManager.update();
     this.blackhole.update();
     this.bgman.update();
     this.deadline.update();

@@ -4,19 +4,31 @@ export default class MapManager {
     scene: Phaser.Scene;
     objects: {};
     currentMap;
+    currentLevel;
+    currentTilesetKey;
 
     constructor(scene) {
         this.scene = scene;
         this.objects = {};
+
+        //register script actions
+        this.scene.events.on('action-show', ([name]) => {
+            this.getMapObject(name).setAlpha(1);
+        });
+        this.scene.events.on('action-hide', name => {
+            this.getMapObject(name).setAlpha(0);
+        });
     }
     
     loadLevel(level) {
         //Load Tiled Data from "level"
         const { tilemapKey, tilesetKey, tilesetName, 
                 layers, objectTypes } = level;
+        this.currentLevel = level;
         this.loadTilemap(tilemapKey, tilesetKey, tilesetName, layers);
         
         //Instantiate Objects
+        this.instantiateObjectOfType('sprite', null);
         Object.entries(objectTypes).forEach(([type, Constructor]) => {
             this.instantiateObjectOfType(type, Constructor);
         });
@@ -26,6 +38,7 @@ export default class MapManager {
         //create new tilemap from map json: mapKey
         const tilemap = this.scene.make.tilemap({ key: mapKey });
         this.currentMap = tilemap;
+        this.currentTilesetKey = tilesetKey;
         
         //Link the tilesetKey (png) with the tilesetName from Tiled
         this.currentMap.addTilesetImage(tilesetName, tilesetKey);
@@ -57,11 +70,18 @@ export default class MapManager {
         
         Object.entries(objects).forEach(([name, arr]) => {
             //@ts-ignore
-            const instancedObjects = arr.map(obj => {
-                //Create new generic mapObject
-                const mapObject = new MapObject(obj.name, obj.type);                
-                //Instance new object from constructor and combine with mapObject
-                return Object.assign(new Constructor(this.scene, obj), mapObject);
+            const instancedObjects = arr.map(obj => {               
+                if (obj.type == 'sprite') {
+                    //If sprite, use createFromObjects helper
+                    return this.currentMap.createFromObjects('objects', {
+                        name: obj.name,
+                        key: this.currentLevel.objectSpritesheetKey,
+                        frame: obj.gid - 1,
+                    });
+                } else {
+                    //If anything else, use custom constructor
+                    return new Constructor(this.scene, obj);
+                }
             });
             this.objects[name] = instancedObjects;
         });
@@ -96,7 +116,7 @@ export default class MapManager {
 
     getMapObjects(name?) {
         //Return all objects, or all objects of name: 'name'
-        const objects = name ? this.objects : this.objects[name];
+        return name ? this.objects : this.objects[name];
     }
 
     getMapObjectsOfType(type) {
@@ -110,9 +130,11 @@ export default class MapManager {
 class MapObject {
     name: string;
     tiledType: string;
+    tiledData: any;
 
-    constructor(name, type) {
-        this.name = name;
-        this.tiledType = type;
+    constructor(object) {
+        this.name = object.name;
+        this.tiledType = object.type;
+        this.tiledData = object;
     }
 }

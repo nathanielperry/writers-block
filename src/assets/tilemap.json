@@ -104,12 +104,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -132,12 +127,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -160,12 +150,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -188,12 +173,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -216,12 +196,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -244,12 +219,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -272,12 +242,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -300,12 +265,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -329,11 +289,6 @@
                          "name":"colliding",
                          "type":"bool",
                          "value":false
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -356,12 +311,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -384,12 +334,7 @@
                         {
                          "name":"colliding",
                          "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":6
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"sprite",
@@ -434,23 +379,6 @@
                 }, 
                 {
                  "height":16,
-                 "id":51,
-                 "name":"key-right",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":2
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":96,
-                 "y":96
-                }, 
-                {
-                 "height":16,
                  "id":52,
                  "name":"key-up",
                  "properties":[
@@ -466,71 +394,10 @@
                         }],
                  "rotation":0,
                  "type":"sprite",
-                 "visible":true,
+                 "visible":false,
                  "width":16,
                  "x":304,
                  "y":64
-                }, 
-                {
-                 "height":16,
-                 "id":53,
-                 "name":"key-down",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":640,
-                 "y":96
-                }, 
-                {
-                 "height":16,
-                 "id":55,
-                 "name":"keyboard",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":4
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":640,
-                 "y":48
-                }, 
-                {
-                 "height":16,
-                 "id":56,
-                 "name":"keyboard",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":5
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":656,
-                 "y":48
                 }, 
                 {
                  "height":98.5,
@@ -633,204 +500,6 @@
                  "width":32,
                  "x":2112,
                  "y":0
-                }, 
-                {
-                 "height":16,
-                 "id":80,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":7
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2288,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":81,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":8
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2320,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":82,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":8
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2304,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":83,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":8
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2336,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":84,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":8
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2352,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":85,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":8
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2368,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":86,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":8
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2384,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":87,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":8
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2400,
-                 "y":144
-                }, 
-                {
-                 "height":16,
-                 "id":88,
-                 "name":"bridge-1",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":9
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":2416,
-                 "y":144
                 }, 
                 {
                  "height":160,
@@ -1046,28 +715,6 @@
                  "width":32,
                  "x":5072,
                  "y":0
-                }, 
-                {
-                 "height":16,
-                 "id":170,
-                 "name":"key-down-2",
-                 "properties":[
-                        {
-                         "name":"alpha",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"sprite",
-                 "visible":true,
-                 "width":16,
-                 "x":1056,
-                 "y":112
                 }, 
                 {
                  "height":0,
@@ -1324,6 +971,240 @@
                  "width":16,
                  "x":64,
                  "y":112
+                }, 
+                {
+                 "gid":15,
+                 "height":16,
+                 "id":205,
+                 "name":"key-right",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":112
+                }, 
+                {
+                 "gid":48,
+                 "height":16,
+                 "id":212,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2288,
+                 "y":160
+                }, 
+                {
+                 "gid":50,
+                 "height":16,
+                 "id":213,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2416,
+                 "y":160
+                }, 
+                {
+                 "gid":49,
+                 "height":16,
+                 "id":214,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2400,
+                 "y":160
+                }, 
+                {
+                 "gid":49,
+                 "height":16,
+                 "id":215,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2384,
+                 "y":160
+                }, 
+                {
+                 "gid":49,
+                 "height":16,
+                 "id":216,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2368,
+                 "y":160
+                }, 
+                {
+                 "gid":49,
+                 "height":16,
+                 "id":217,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2352,
+                 "y":160
+                }, 
+                {
+                 "gid":49,
+                 "height":16,
+                 "id":218,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2336,
+                 "y":160
+                }, 
+                {
+                 "gid":49,
+                 "height":16,
+                 "id":219,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2320,
+                 "y":160
+                }, 
+                {
+                 "gid":49,
+                 "height":16,
+                 "id":220,
+                 "name":"bridge-1",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":2304,
+                 "y":160
+                }, 
+                {
+                 "gid":27,
+                 "height":16,
+                 "id":221,
+                 "name":"key-down-2",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":1040,
+                 "y":128
+                }, 
+                {
+                 "gid":27,
+                 "height":16,
+                 "id":227,
+                 "name":"key-down",
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":640,
+                 "y":112
+                }, 
+                {
+                 "gid":94,
+                 "height":16,
+                 "id":228,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":640,
+                 "y":240
+                }, 
+                {
+                 "gid":94,
+                 "height":16,
+                 "id":229,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":640,
+                 "y":112
+                }, 
+                {
+                 "gid":94,
+                 "height":16,
+                 "id":230,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":640,
+                 "y":112
+                }, 
+                {
+                 "gid":4,
+                 "height":16,
+                 "id":238,
+                 "name":"keyboard",
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":640,
+                 "y":64
+                }, 
+                {
+                 "gid":5,
+                 "height":16,
+                 "id":239,
+                 "name":"keyboard",
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":656,
+                 "y":64
+                }, 
+                {
+                 "gid":16,
+                 "height":16,
+                 "id":243,
+                 "name":"key-up",
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":16,
+                 "x":304,
+                 "y":80
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1332,7 +1213,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":205,
+ "nextobjectid":244,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

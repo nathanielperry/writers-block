@@ -1,13 +1,10 @@
 export default class MapSpawnpoint {
-    scene: Phaser.Scene;
     x: integer;
     y: integer;
 
-    constructor(scene, mapObject) {
-        const { x, y } = mapObject;
-        this.scene = scene;
-        this.x = x;
-        this.y = y;
+    constructor(scene, tiledObject) {       
+        const { x, y } = tiledObject;
+        this.setPosition(x, y);
     }
 
     setPosition(x, y) {

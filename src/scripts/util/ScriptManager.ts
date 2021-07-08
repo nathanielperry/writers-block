@@ -2,6 +2,7 @@ import MapObjectsManager from "./MapObjectsManager";
 
 export default class ScriptManager {
     script: String;
+    paused: Boolean;
     lastEvent: String;
     scene: Phaser.Scene;
     events: Array<{
@@ -22,9 +23,18 @@ export default class ScriptManager {
         this.scene = scene;
         this.gameObjects = {};
         this.gameActions = {};
+        this.paused = false;
 
         this.parseEvents();
         this.createEventListener();
+
+        //Register pause/resume event listeners
+        this.scene.events.on('scriptPause', () => {
+            this.paused = true;
+        });
+        this.scene.events.on('scriptResume', () => {
+            this.paused = false;
+        });
     }
 
     //Load a string into script manager
@@ -51,7 +61,7 @@ export default class ScriptManager {
                 content: lines.slice(1),
             }
         });
-
+        
         this.events = events;
         return this;
     }
@@ -92,20 +102,33 @@ export default class ScriptManager {
 
     runEventByName(name) {
         const event = this.events.find(e => e.name === name);
-        this.run(event);
+        if (event) {
+            this.run(event);
+        }
     }
 
     //Run a parsed event object by emitting an [action, args] 
     //pair for each as a script-action event or a `story string` 
     //as a script-story event
+    //TODO: Refactor script manager to fix scope issues
     async run(event) {
         this.lastEvent = event.name;
         for (const str of event.content) {
-            //If string starts with '--' run corresponding action (if exists)
+            //If string starts with '--' emit corresponding event (if exists)
             if(/^--/.test(str)) {
                 let [_, action, args] = str.match(/--(.+)\((.+)\)/);
                 args = this.parseEventArgs(args.split(','));
-                await this.gameActions[action].bind(this.gameObjects)(...args);
+                //If paused, wait for resume
+                await new Promise((resolve) => {
+                    const pauseInterval = setInterval(() => {
+                        if (!this.paused) {
+                            resolve(true);
+                            clearInterval(pauseInterval);
+                        }
+                    }, 10);
+                });
+                //Emit script action as event
+                this.scene.events.emit('action-' + action, args);
             //If string starts and ends with `backticks`, send script-story event with contents
             } else if(/^`.+`$/.test(str)) {
                 let storyString = str.slice(1, str.length - 1);

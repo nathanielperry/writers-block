@@ -26,6 +26,9 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.load.image('tileset', 'assets/img/tileset.png');
     this.load.tilemapTiledJSON('tilemap', 'assets/tilemap.json');
+    this.load.spritesheet('tilesheet', 'assets/img/tileset.png', {
+      frameWidth: 16, frameHeight: 16,
+    })
 
     this.load.image('paper', 'assets/img/paper.png');
     this.load.image('mountains', 'assets/img/mountains.png');

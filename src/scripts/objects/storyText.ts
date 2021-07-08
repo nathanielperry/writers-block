@@ -11,7 +11,7 @@ export default class StoryText {
       this.isActive = false;
       this.setInactive();
 
-      this.scene.events.on('script-story', str => {
+      this.scene.events.on('action-story', str => {
         this.addStoryBlock(str);
       });
 
@@ -72,7 +72,7 @@ export default class StoryText {
       //If there is a valid event name, emit it.
       if (match !== null) {
         console.log(match[1]);
-        this.scene.events.emit('script-event', match[1]);
+        this.scene.events.emit('action-event', match[1]);
         //offsetPosition increased to point at closing bracket.
         this.offsetPosition += match[0].length;
       }
